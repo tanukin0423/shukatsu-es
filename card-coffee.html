@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コーヒーブレイク｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0f7f3;color:#1a2a1a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;}
+.card{background:white;width:100%;max-width:680px;border-radius:18px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.13);border:1.5px solid #c8e0c8;}
+.card-header{background:linear-gradient(135deg,#2c1a0e 0%,#4a2c12 50%,#6f4e37 100%);padding:22px 28px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.header-left{display:flex;align-items:center;gap:14px;}
+.header-emoji{font-size:2.6rem;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,0.4));}
+.brand{font-size:.72rem;color:#b7e4c7;letter-spacing:.08em;margin-bottom:3px;}
+.tool-name{font-family:'Noto Serif JP',serif;font-size:1.5rem;font-weight:900;color:white;letter-spacing:.06em;}
+.tool-sub{font-size:.72rem;color:rgba(255,255,255,0.75);margin-top:4px;}
+.header-badge{background:rgba(233,196,106,0.2);border:1px solid #e9c46a;color:#f4d58d;font-size:.68rem;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.card-body{padding:24px 28px;}
+.main-row{display:flex;gap:24px;align-items:flex-start;margin-bottom:22px;}
+.qr-block{flex-shrink:0;text-align:center;}
+.qr-wrap{width:150px;height:150px;border:3px solid #2d6a4f;border-radius:12px;overflow:hidden;background:white;display:inline-block;}
+.qr-wrap img{width:150px;height:150px;display:block;}
+.qr-label{font-size:.7rem;color:#6b7c6b;margin-top:6px;line-height:1.5;}
+.qr-url{font-size:.6rem;color:#2d6a4f;word-break:break-all;margin-top:4px;font-weight:700;}
+.steps-block{flex:1;}
+.steps-title{font-family:'Noto Serif JP',serif;font-size:.9rem;font-weight:700;color:#1a3a2a;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e8f5e0;}
+.step-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.step-num{width:24px;height:24px;flex-shrink:0;background:#2d6a4f;color:white;border-radius:50%;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.step-text{font-size:.8rem;line-height:1.6;color:#1a2a1a;}
+.step-text strong{color:#1a3a2a;display:block;font-size:.82rem;}
+.framework-box{background:#f0f7f3;border-radius:10px;padding:14px 16px;margin-bottom:18px;border-left:4px solid #52b788;}
+.framework-title{font-size:.78rem;font-weight:700;color:#1a3a2a;margin-bottom:8px;}
+.framework-items{display:flex;flex-wrap:wrap;gap:6px;}
+.fw-item{font-size:.72rem;background:white;border:1px solid #c8ddc8;color:#1a3a2a;padding:3px 10px;border-radius:20px;font-weight:500;}
+.fw-item.why{background:#fffbee;border-color:#e9c46a;color:#7a5c00;font-weight:700;}
+.rules-box{background:linear-gradient(135deg,#fffbee,#fff8e0);border:2px solid #e9c46a;border-radius:12px;padding:16px 18px;margin-bottom:18px;}
+.rules-title{font-family:'Noto Serif JP',serif;font-size:.88rem;font-weight:700;color:#7a5c00;margin-bottom:12px;}
+.rule-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.rule-item:last-child{margin-bottom:0;}
+.rule-badge{font-size:.65rem;font-weight:700;background:#c9a227;color:white;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
+.rule-text{font-size:.78rem;color:#5a4010;line-height:1.55;font-weight:500;}
+.keiji-box{background:linear-gradient(135deg,#f2faf5,#eaf5ec);border:1px solid #b8ddb8;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start;}
+.keiji-icon{font-size:1.8rem;flex-shrink:0;line-height:1;}
+.keiji-name{font-size:.72rem;font-weight:700;color:#2d6a4f;margin-bottom:5px;}
+.keiji-msg{font-size:.78rem;color:#2a4a2a;line-height:1.75;}
+.card-footer{background:#f8fbf8;border-top:1px solid #e0ede0;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-brand{font-size:.72rem;color:#6b7c6b;}
+.footer-brand strong{color:#2d6a4f;}
+.footer-url{font-size:.65rem;color:#2d6a4f;}
+@media print{
+  body{background:white;padding:0;display:block;}
+  .card{border-radius:0;box-shadow:none;border:none;max-width:100%;page-break-inside:avoid;}
+  .card-header,.rules-box,.keiji-box,.framework-box,.step-num{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  @page{margin:10mm;size:A4;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <div class="header-left">
+      <span class="header-emoji">☕</span>
+      <div>
+        <div class="brand">🌱 就活の木｜ES作成支援カードツール</div>
+        <div class="tool-name">コーヒーブレイク</div>
+        <div class="tool-sub">趣味・特技・資格の一言説明｜人柄を伝えるメソッド</div>
+      </div>
+    </div>
+    <div class="header-badge">APIキー不要・無料</div>
+  </div>
+  <div class="card-body">
+    <div class="main-row">
+      <div class="qr-block">
+        <div class="qr-wrap"><img src="qr-coffee.png" alt="コーヒーブレイク QRコード"></div>
+        <div class="qr-label">📱 スマホで読み取って<br>すぐに使えます</div>
+        <div class="qr-url">tanukin0423.github.io/<br>shukatsu-es/es-coffee.html</div>
+      </div>
+      <div class="steps-block">
+        <div class="steps-title">📋 使い方（3ステップ）</div>
+        <div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>テーマカードを選ぶ</strong>ゲーム・スポーツ・音楽・料理・TOEIC・IT資格など9テーマから選択</div></div><div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>人柄・こだわりを入力</strong>内容・なぜ続けているか（WHY）・こだわり・伝えたい人柄の4項目を記入</div></div><div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>プロンプトをClaude.aiへ</strong>生成されたプロンプトをコピーしてclaude.aiへ。STEP2のプロンプトも続けて貼る。</div></div>
+      </div>
+    </div>
+    <div class="framework-box">
+      <div class="framework-title">💡 このツールのポイント</div>
+      <div class="framework-items"><span class="fw-item">9テーマ（趣味・特技・資格）</span><span class="fw-item why">WHY：なぜ続けているか ← ここが等身大</span><span class="fw-item">スキルより人柄・こだわりを重視</span><span class="fw-item">50〜150文字／A4・1行対応</span></div>
+    </div>
+    <div class="rules-box">
+      <div class="rules-title">⚠️ AI活用の鉄則（必ず守ること）</div>
+      <div class="rule-item"><span class="rule-badge">鉄則1</span><div class="rule-text">「AIは楽をするツールではない」ことを、しっかり理解しておくこと。</div></div>
+      <div class="rule-item"><span class="rule-badge">鉄則2</span><div class="rule-text">「AIを等身大の自分を表現するオブザーバーとして使う」こと。</div></div>
+      <div class="rule-item"><span class="rule-badge">鉄則3</span><div class="rule-text">「できたものに、等身大のあなたらしさが出ているか」確認すること。</div></div>
+    </div>
+    <div class="keiji-box">
+      <div class="keiji-icon">🌱</div>
+      <div>
+        <div class="keiji-name">キャリ爺より（北山 四郎 / 多摩大学キャリア支援）</div>
+        <div class="keiji-msg">面接官が「この人と話してみたい」と思う瞬間を作るコーナーです。特別なことでなくていい。<strong>あなたのこだわり・継続してきたこと——そこに人柄が宿ります。</strong>「なぜ続けているのか」を一歩深く考えることで、スキルではなくあなたらしさが伝わります。</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="footer-brand"><strong>🌱 就活の木</strong>｜キャリアコンサルタント技能士2級 北山 四郎（多摩大学）</div>
+    <div class="footer-url">https://tanukin0423.github.io/shukatsu-es/</div>
+  </div>
+</div>
+</body>
+</html>
