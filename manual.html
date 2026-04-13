@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>使い方マニュアル｜ES作成支援カードツール｜就活の木</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
 :root {
   --green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;
@@ -320,7 +320,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-gakuchika"></div>
+              <div class="qr-wrap"><img src="qr-gakuchika.png" alt="ガクチカ QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-gakuchika.html</div>
             </div>
@@ -368,7 +368,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-pr"></div>
+              <div class="qr-wrap"><img src="qr-pr.png" alt="自己PR QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-jiko-pr.html</div>
             </div>
@@ -416,7 +416,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-shibo"></div>
+              <div class="qr-wrap"><img src="qr-shibo.png" alt="志望動機 QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-shibo.html</div>
             </div>
@@ -464,7 +464,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-jiku"></div>
+              <div class="qr-wrap"><img src="qr-jiku.png" alt="就活の軸 QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-jiku.html</div>
             </div>
@@ -517,7 +517,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-esq"></div>
+              <div class="qr-wrap"><img src="qr-esq.png" alt="ES頻出質問 QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-esq.html</div>
             </div>
@@ -565,7 +565,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
           </div>
           <div class="tool-manual-right">
             <div class="qr-area">
-              <div class="qr-wrap" id="qr-m-coffee"></div>
+              <div class="qr-wrap"><img src="qr-coffee.png" alt="コーヒーブレイク QRコード"></div>
               <div class="qr-label">スマホで読み取ってすぐ使える</div>
               <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-coffee.html</div>
             </div>
@@ -597,36 +597,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
   <a href="index.html" style="color:var(--green-mid);">← ランチャーページに戻る</a>
 </div>
 
-<script>
-const BASE_URL = 'https://tanukin0423.github.io/shukatsu-es/';
 
-const tools = [
-  { id: 'qr-m-gakuchika', file: 'es-gakuchika.html' },
-  { id: 'qr-m-pr',        file: 'es-jiko-pr.html'   },
-  { id: 'qr-m-shibo',     file: 'es-shibo.html'      },
-  { id: 'qr-m-jiku',      file: 'es-jiku.html'       },
-  { id: 'qr-m-esq',       file: 'es-esq.html'        },
-  { id: 'qr-m-coffee',    file: 'es-coffee.html'     }
-];
-
-window.addEventListener('load', () => {
-  tools.forEach(t => {
-    const el = document.getElementById(t.id);
-    if (!el) return;
-    try {
-      new QRCode(el, {
-        text: BASE_URL + t.file,
-        width: 90,
-        height: 90,
-        colorDark: '#1a3a2a',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M
-      });
-    } catch(e) {
-      el.style.background = '#eee';
-    }
-  });
-});
-</script>
 </body>
 </html>
