@@ -204,6 +204,23 @@ body {
   transition: opacity .2s;
 }
 .btn-open:hover { opacity: .88; }
+.btn-print {
+  display: block;
+  background: white;
+  color: var(--green-mid);
+  border: 1.5px solid var(--green-light);
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: .75rem; font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.btn-print:hover { background: var(--green-bg); border-color: var(--green-mid); }
+.tool-card.coffee .btn-print { color: #6f4e37; border-color: #c69c6d; }
+.tool-card.coffee .btn-print:hover { background: #f9f3ec; }
 
 /* ===== COFFEE CARD SPECIAL ===== */
 .tool-card.coffee .card-tag { color: #6f4e37; background: #f0e8d8; }
@@ -362,6 +379,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-gakuchika"></div>
         <a href="es-gakuchika.html" class="btn-open">🎯 ガクチカを作る →</a>
+        <a href="card-gakuchika.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
@@ -383,6 +401,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-pr"></div>
         <a href="es-jiko-pr.html" class="btn-open">💪 自己PRを作る →</a>
+        <a href="card-jiko-pr.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
@@ -404,6 +423,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-shibo"></div>
         <a href="es-shibo.html" class="btn-open">🧭 志望動機を作る →</a>
+        <a href="card-shibo.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
@@ -425,6 +445,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-jiku"></div>
         <a href="es-jiku.html" class="btn-open">⚓ 就活の軸を作る →</a>
+        <a href="card-jiku.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
@@ -446,6 +467,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-esq"></div>
         <a href="es-esq.html" class="btn-open">📋 頻出質問を作る →</a>
+        <a href="card-esq.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
@@ -467,6 +489,7 @@ body {
       <div class="card-bottom">
         <div class="card-qr" id="qr-coffee"></div>
         <a href="es-coffee.html" class="btn-open">☕ コーヒーブレイクを作る →</a>
+        <a href="card-coffee.html" target="_blank" class="btn-print">🖨️ 印刷</a>
       </div>
     </div>
 
