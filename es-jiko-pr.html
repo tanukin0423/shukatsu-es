@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自己PR作成支援｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;--amber:#e9c46a;--amber-dark:#c9a227;--amber-light:#f4d58d;--bg:#f2f7f4;--gray:#6b7c6b;--text:#1a2a1a;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hero{background:linear-gradient(160deg,var(--green-deepest) 0%,var(--green-dark) 40%,var(--green-mid) 100%);padding:28px 24px 36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%2352b788' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.hero-brand{display:flex;align-items:center;gap:14px;}
+.hero-tree{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:900;color:white;letter-spacing:.08em;}
+.hero-subtitle{font-size:.72rem;color:var(--green-pale);margin-top:4px;}
+.hero-badge{background:rgba(233,196,106,0.2);border:1px solid var(--amber);color:var(--amber-light);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.hero-section-tag{display:inline-block;background:rgba(82,183,136,0.25);border:1px solid var(--green-light);color:var(--green-pale);font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.hero-desc{font-size:.85rem;color:rgba(255,255,255,0.85);line-height:1.7;}
+.hero-desc strong{color:var(--amber-light);}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 60px;}
+.card-grid-3{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:6px;}
+.card-grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:6px;}
+@media(min-width:560px){.card-grid-3{grid-template-columns:repeat(3,1fr);gap:14px;}.card-grid-4{grid-template-columns:repeat(4,1fr);gap:14px;}}
+.cat-label{font-size:.76rem;font-weight:700;color:var(--green-mid);background:#e8f5e0;border-radius:20px;padding:3px 12px;display:inline-block;margin:14px 0 10px;}
+.th-card{background:white;border-radius:var(--radius-sm);padding:18px 12px 16px;text-align:center;cursor:pointer;transition:all .22s ease;box-shadow:0 2px 10px rgba(0,0,0,.06);border:2px solid #e4ede4;position:relative;}
+.th-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--green-light);}
+.th-card.selected{border-color:var(--green-mid);background:#f0faf3;}
+.th-card.selected::after{content:'✓';position:absolute;top:7px;right:9px;color:var(--green-mid);font-weight:700;font-size:.82rem;}
+.th-emoji{font-size:2.2rem;display:block;margin-bottom:7px;line-height:1;}
+.th-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.4;}
+.th-sub{font-size:.7rem;color:var(--gray);margin-top:3px;line-height:1.3;}
+.sec-title{margin-bottom:20px;}
+.sec-title h2{font-family:'Noto Serif JP',serif;font-size:1.25rem;color:var(--green-dark);margin-bottom:4px;}
+.sec-title p{font-size:.83rem;color:var(--gray);line-height:1.6;}
+.sec-badge{display:inline-block;background:var(--green-pale);color:var(--green-dark);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.form-wrap{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px 30px;margin-top:6px;}
+.form-selected-badge{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f0faf3;border:2px solid var(--green-mid);border-radius:var(--radius-sm);margin-bottom:22px;}
+.form-sel-emoji{font-size:1.8rem;}
+.form-sel-name{font-size:1rem;font-weight:700;color:var(--green-dark);}
+.form-sel-sub{font-size:.75rem;color:var(--gray);margin-top:2px;}
+.step-lbl{font-weight:bold;color:#005a9c;margin-bottom:14px;font-size:.9rem;display:block;}
+.activity-box{background:#eef9ff;padding:14px;border-radius:8px;border:2px solid #b0c4de;margin-bottom:22px;}
+.activity-box label{color:#005a9c!important;font-weight:bold;font-size:.9rem;display:block;margin-bottom:7px;}
+.activity-box input{width:100%;padding:9px 11px;border:1px solid #b0c4de;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-weight:bold;margin-bottom:7px;color:#2c3e50;font-size:.9rem;}
+.form-group textarea{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;min-height:88px;resize:vertical;line-height:1.65;}
+.form-group textarea:focus,.activity-box input:focus{outline:none;border-color:var(--green-light);box-shadow:0 0 0 3px rgba(82,183,136,.1);}
+.form-group input[type="text"]{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;}
+.char-counter{display:block;text-align:right;font-size:.8em;color:#999;margin-top:4px;}
+.example-box{background:#f4f8ff;border:1px dashed #b0c4de;border-radius:6px;padding:9px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;}
+.example-text{flex:1;margin:0;font-size:.85em;color:#444;line-height:1.55;}
+.btn-copy-ex{flex-shrink:0;background:white;border:1px solid #007bff;color:#007bff;border-radius:5px;padding:4px 8px;font-size:.78em;font-weight:bold;cursor:pointer;white-space:nowrap;}
+.btn-copy-ex:hover{background:#f0f8ff;}
+.target-inputs{display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:14px;}
+@media(min-width:540px){.target-inputs{grid-template-columns:repeat(3,1fr);}}
+.form-control{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;font-size:.86rem;font-family:'Noto Sans JP',sans-serif;background:white;-webkit-appearance:none;appearance:none;}
+select.form-control{background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22%3E%3Cpath fill%3D%22%232d6a4f%22 d%3D%22M6 8L1 3h10z%22%2F%3E%3C%2Fsvg%3E');background-repeat:no-repeat;background-position:right 9px center;padding-right:26px;cursor:pointer;}
+.btn-generate{display:block;width:100%;padding:13px;background:linear-gradient(135deg,var(--green-mid),var(--green-dark));color:white;border:none;border-radius:8px;font-size:.98rem;font-weight:bold;cursor:pointer;font-family:'Noto Sans JP',sans-serif;letter-spacing:.05em;box-shadow:0 4px 15px rgba(45,106,79,.35);transition:all .2s;margin-top:4px;}
+.btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,106,79,.4);}
+.result-area{margin-top:22px;padding-top:22px;border-top:2px solid #e8f0e8;}
+.prompt-block{margin-bottom:18px;}
+.prompt-block h4{font-size:.9rem;font-weight:700;color:var(--green-dark);border-left:4px solid var(--green-mid);padding-left:9px;margin-bottom:7px;}
+.prompt-block p{font-size:.8rem;color:var(--gray);margin-bottom:7px;}
+.prompt-textarea{width:100%;min-height:140px;background:#f8f8f8;border:1px solid #ddd;border-radius:7px;padding:9px;font-family:'Courier New',monospace;font-size:.76rem;line-height:1.6;resize:vertical;color:#333;}
+.btn-copy-prompt{float:right;margin-top:6px;background:#28a745;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-copy-prompt:hover{background:#218838;}
+.clearfix::after{content:'';display:table;clear:both;}
+.nav-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn-back{background:#6c757d;color:white;border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-back:hover{background:#5a6268;}
+.btn-claude{background:var(--amber);color:var(--green-dark);border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;}
+.btn-claude:hover{background:var(--amber-dark);color:white;}
+.keiji-card{background:linear-gradient(135deg,#f0faf3,#e8f5e0);border:1px solid #b8ddb8;border-radius:var(--radius-sm);padding:18px 20px;margin-top:22px;font-size:.82rem;line-height:1.8;color:#2a4a2a;}
+.keiji-name{font-weight:700;color:var(--green-mid);font-size:.83rem;margin-bottom:5px;}
+.keiji-question{background:#f0faf3;border-left:4px solid var(--green-light);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px;font-size:.82rem;color:#2a4a2a;line-height:1.7;}
+.keiji-question .keiji-q-label{font-weight:700;color:var(--green-mid);font-size:.78rem;display:block;margin-bottom:5px;}
+.keiji-question ul{margin:0;padding-left:1.2em;}
+.keiji-question ul li{margin-bottom:2px;}
+.why-required-badge{display:inline-block;background:#c9a227;color:white;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.why-hint{background:#fffbee;border-left:4px solid var(--amber);padding:9px 13px;font-size:.8em;color:#7a5c00;line-height:1.75;margin-bottom:8px;border-radius:0 6px 6px 0;}
+.form-group.why-group{background:#fffdf4;border:1px solid #e9c46a;border-radius:8px;padding:12px 14px 8px;margin-bottom:20px;}
+.self-first-hint{font-size:.75rem;color:var(--gray);text-align:center;margin-bottom:6px;font-style:italic;}
+.example-box-later{margin-top:8px;}
+.copy-hint-msg{display:none;background:#fffbee;border:2px solid var(--amber);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.83rem;color:#7a5c00;line-height:1.6;}
+.copy-hint-msg.show{display:block;}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.anim-in{animation:fadeSlideIn .3s ease both;}
+.error-msg{color:#c0392b;font-weight:bold;text-align:center;padding:10px;font-size:.88rem;}
+.hidden{display:none!important;}
+.footer{text-align:center;padding:24px 16px;font-size:.75rem;color:var(--gray);line-height:1.8;border-top:1px solid #d8e8d8;margin-top:40px;}
+.footer strong{color:var(--green-mid);}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-brand">
+        <span class="hero-tree">🌱</span>
+        <div><div class="hero-title">就活の木｜ES作成支援</div><div class="hero-subtitle">STAR＋WHY＋F&C メソッド</div></div>
+      </div>
+      <div class="hero-badge">APIキー不要</div>
+    </div>
+    <div class="hero-section-tag">💪 自己PR</div>
+    <p class="hero-desc"><strong>「強み」はエピソードで証明する。</strong><br>
+    カードを選んで、強みを発揮したエピソードを入力するだけで、採用担当者が「再現性がある」と感じるプロンプトが生成されます。</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="pr-screen1">
+    <div class="sec-title">
+      <span class="sec-badge">💪 自己PR</span>
+      <h2>あなたの「強み」を選んでください</h2>
+      <p>最も自信を持って語れる強みのカードをクリックしてください。特別な経験でなくて大丈夫。</p>
+    </div>
+    <div class="cat-label" style="margin-top:4px;">🚀 前に踏み出す力</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="prSelectStr('shutaisei',this)"><span class="th-emoji">🙋</span><div class="th-name">主体性</div><div class="th-sub">自分で考えて動ける</div></div>
+      <div class="th-card" onclick="prSelectStr('jikko',this)"><span class="th-emoji">🏃</span><div class="th-name">実行力</div><div class="th-sub">決めたことをやり遂げる</div></div>
+      <div class="th-card" onclick="prSelectStr('hataraki',this)"><span class="th-emoji">📣</span><div class="th-name">働きかけ力</div><div class="th-sub">周りを巻き込み動かす</div></div>
+    </div>
+    <div class="cat-label">🧠 考え抜く力</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="prSelectStr('kadai',this)"><span class="th-emoji">🔍</span><div class="th-name">課題発見力</div><div class="th-sub">問題点を見つけるのが得意</div></div>
+      <div class="th-card" onclick="prSelectStr('keikaku',this)"><span class="th-emoji">📅</span><div class="th-name">計画力</div><div class="th-sub">段取りを組むのが得意</div></div>
+      <div class="th-card" onclick="prSelectStr('sozo',this)"><span class="th-emoji">💡</span><div class="th-name">創造力</div><div class="th-sub">新しいアイデアを考えるのが好き</div></div>
+    </div>
+    <div class="cat-label">🤝 チームで働く力</div>
+    <div class="card-grid-4">
+      <div class="th-card" onclick="prSelectStr('hasshin',this)"><span class="th-emoji">🎤</span><div class="th-name">発信力</div><div class="th-sub">意見を分かりやすく伝える</div></div>
+      <div class="th-card" onclick="prSelectStr('keicho',this)"><span class="th-emoji">👂</span><div class="th-name">傾聴力・共感力</div><div class="th-sub">じっくり聞ける</div></div>
+      <div class="th-card" onclick="prSelectStr('junan',this)"><span class="th-emoji">🌊</span><div class="th-name">柔軟性・適応力</div><div class="th-sub">変化に対応できる</div></div>
+      <div class="th-card" onclick="prSelectStr('jokyo',this)"><span class="th-emoji">🧭</span><div class="th-name">情況把握力</div><div class="th-sub">空気を読んで動ける</div></div>
+      <div class="th-card" onclick="prSelectStr('kyochosei',this)"><span class="th-emoji">🫂</span><div class="th-name">協調性・規律性</div><div class="th-sub">チームのために協力できる</div></div>
+      <div class="th-card" onclick="prSelectStr('keizoku',this)"><span class="th-emoji">🔥</span><div class="th-name">継続力・忍耐力</div><div class="th-sub">コツコツ頑張れる</div></div>
+    </div>
+    <div class="keiji-card"><div class="keiji-name">🌱 キャリ爺より</div>企業が知りたいのは「あなたが仕事をする上で大切にしそうな姿勢」や「あなたらしさ」です。日常の中で自然とやってしまっていたこと——そこに強みが隠れています。</div>
+  </div>
+
+  <div id="pr-screen2" class="hidden">
+    <div class="form-wrap">
+      <div class="form-selected-badge"><span class="form-sel-emoji" id="pr-form-emoji"></span><div><div class="form-sel-name" id="pr-form-name"></div><div class="form-sel-sub">強みのエピソードを入力してください</div></div></div>
+      <div class="activity-box"><label>【STEP 1.5】その強みは、何の活動で培われましたか？（重要）</label><input type="text" id="pr-activity" placeholder="その強みが最も発揮された活動・経験を一つ教えてください（例：〇〇のアルバイト、ゼミ、サークル活動 など）"></div>
+      <span class="step-lbl">【STEP 2】あなた自身の言葉でエピソードを入力してください</span>
+
+      <div class="form-group">
+        <label>【状況】Situation</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：場面を思い浮かべて</span><ul><li>その強みを発揮した、具体的な場面はどんな状況だった？</li><li>いつ・どこで・誰と・何をしていたか教えて。</li></ul></div>
+        <textarea id="pr-inp-s" data-counter="pr-cnt-s" oninput="updateCnt(this)" placeholder="その活動の中で、どんな状況・場面でしたか？（いつ・どこで・誰と・どんな規模だったかも入れて）"></textarea>
+        <span id="pr-cnt-s" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-s"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-s','pr-inp-s')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【課題】Task</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：どんな壁があった？</span><ul><li>そのとき「うまくいかない」「困った」と感じたことはある？</li><li>誰かから何か言われたり、モヤモヤした場面は？</li></ul></div>
+        <textarea id="pr-inp-t" data-counter="pr-cnt-t" oninput="updateCnt(this)" placeholder="そのとき、あなたの前に立ちはだかった課題・壁は何でしたか？（具体的な場面や数字があるとGoodです）"></textarea>
+        <span id="pr-cnt-t" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-t"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-t','pr-inp-t')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group why-group">
+        <label>💡 なぜ、あなたはその課題を放っておけなかったのですか？<span class="why-required-badge">ここが核心</span></label>
+        <div class="why-hint">T（課題）からA（行動）への橋渡しになる部分です。あなたが動いた理由を一言加えると、採用担当者に「この人に会いたい」と思わせる核心になります。</div>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：「なんで動いたの？」</span><ul><li>「誰かがやってくれるだろう」と思わずに、なぜあなたは動いたの？</li><li>それはあなたの性格？それとも過去の経験から？</li></ul></div>
+        <textarea id="pr-inp-why" data-counter="pr-cnt-why" oninput="updateCnt(this)" placeholder="なぜ、あなたはその課題を放っておけなかったのですか？（あなたを動かした感情や価値観を正直に教えてください）"></textarea>
+        <span id="pr-cnt-why" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-why"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-why','pr-inp-why')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【行動】Action</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：あなたが「した」ことを</span><ul><li>具体的に何をした？なぜその方法を選んだの？</li><li>失敗や試行錯誤があれば、それも書いてみて。</li></ul></div>
+        <textarea id="pr-inp-a" data-counter="pr-cnt-a" oninput="updateCnt(this)" placeholder="あなたが実際にとった行動を教えてください。（「私が〜した」と自分が主語で、工夫やこだわりが伝わるように）"></textarea>
+        <span id="pr-cnt-a" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-a"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-a','pr-inp-a')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【結果】Result</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：何が変わった？</span><ul><li>数字で言えるなら数字で。言えなくても、誰かの言葉・反応でもOK。</li></ul></div>
+        <textarea id="pr-inp-r" data-counter="pr-cnt-r" oninput="updateCnt(this)" placeholder="どんな結果・変化がありましたか？（数字＋周りの反応・自分の手ごたえも入れると伝わりやすいです）"></textarea>
+        <span id="pr-cnt-r" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-r"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-r','pr-inp-r')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【活用法】この強みを活かして</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：入社後の具体的な場面を想像して</span><ul><li>「貢献したい」だけで終わらず、どんな場面でこの強みが使える？</li></ul></div>
+        <textarea id="pr-inp-c" data-counter="pr-cnt-c" oninput="updateCnt(this)" placeholder="この強みを、入社後どんな仕事・場面で活かせると思いますか？（「〜力を御社の〇〇で活かしたい」という形で）"></textarea>
+        <span id="pr-cnt-c" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="pr-ex-c"></p><button class="btn-copy-ex" onclick="copyEx('pr-ex-c','pr-inp-c')">参考にコピー</button></div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #e8f0e8;margin:20px 0;">
+      <span class="step-lbl">【STEP 3】ターゲット・文字数設定</span>
+      <div class="target-inputs">
+        <select id="pr-industry" class="form-control"><option value="">業界（任意）</option></select>
+        <input type="text" id="pr-company" class="form-control" placeholder="企業名（任意）">
+        <select id="pr-job" class="form-control"><option value="">職種（任意）</option></select>
+      </div>
+      <div class="form-group"><select id="pr-length" class="form-control"><option value="200">200文字</option><option value="400" selected>400文字</option><option value="600">600文字</option></select></div>
+      <button class="btn-generate" onclick="prGenerate()">🤖 AI添削プロンプトを生成する</button>
+      <div id="pr-error" class="error-msg hidden"></div>
+      <div id="pr-result" class="result-area hidden"></div>
+    </div>
+    <div class="nav-row"><button class="btn-back" onclick="prGoScreen(1)">← 強み選択に戻る</button><a href="https://claude.ai/new" target="_blank" class="btn-claude">🤖 Claude.aiを開く</a></div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>🌱 就活の木</strong>｜自己PR作成支援ツール<br>
+  「仕事を通して必要とされる生き方を、自分の手で作り上げていくこと」——それが、就職の本質です。<br>
+  <span style="margin-top:6px;display:block;color:#a0b0a0;">君は、一人じゃない。いつでも、目の前のキャリア支援課の扉は開いているよ。——キャリ爺</span>
+</div>
+
+<script>
+const INDUSTRIES=['IT・ソフトウェア・通信','メーカー（製造）','商社','小売・外食','金融（銀行・証券・保険）','マスコミ（広告・出版・放送）','サービス・コンサル','インフラ（運輸・電力・ガス）','官公庁・団体','その他'];
+const JOBS=['営業','企画・マーケティング','事務・アシスタント（一般職）','エンジニア・技術職（IT・WEB）','技術職（メーカー）','販売・サービス','専門職（コンサル・金融など）','クリエイティブ（デザイン・制作）','その他'];
+const CORE=`【最重要指示：「等身大」の文章にすること】
+・「積極的に」「粘り強く」「貢献したい」などの抽象語を具体的な行動・場面に置き換える
+・失敗・葛藤・迷った場面を自然に組み込み、人間らしさを出す
+・T（課題）からA（行動）への橋渡しとして、本人の内面の動機・人格的根拠を必ず文章に織り込む
+・添削後も「本人の原文の感情・視点・言葉の選択」を最大限残す`;
+
+const STRENGTHS={
+  shutaisei:{emoji:'🙋',name:'主体性',s:'例：アルバイト先の飲食店で、新メニューの売上が伸び悩んでいた。チームで意見が停滞し、誰も改善策を動き出せない状態が続いていた。',t:'例：誰かが動き出さなければ状況が変わらないが、会議では結論が出ない状態が3週間続いていた。',why:'例：「誰かがやるだろう」という空気が漂い始めると、自分が動かなければという気持ちが自然と湧いてきます。',a:'例：あえて「5年後の成功イメージ」を全員に語ってもらい、そこから逆算して行動計画を主体的に再立案した。',r:'例：新メニューの注文率が前週比で1.5倍に増加した。',c:'例：「指示を待つのではなく、自ら考えて動く主体性」を、御社の業務でも発揮し、チームの目標達成に貢献したいです。'},
+  jikko:{emoji:'🏃',name:'実行力',s:'例：所属するサークルのSNSフォロワー数が伸び悩んでいた。魅力的なコンテンツがあるのに発信できていないという歯痒さがあった。',t:'例：みんな「やろう」と言うが誰も動かず、SNSの更新が週1回以下という状態が半年続いていた。',why:'例：「やると決めたことをやらない自分」を想像すると居心地が悪く、続けることが一番のストレス解消になります。',a:'例：「毎日1回は必ず更新する」という目標を自ら立て、企画カレンダーを作成。1年間欠かさず更新を続けた。',r:'例：フォロワー数が1年で2倍になり、新入生の認知度向上にもつながった。',c:'例：「決めたことを粘り強くやり遂げる実行力」を、御社の業務でも発揮し、着実に成果を積み上げたいです。'},
+  hataraki:{emoji:'📣',name:'働きかけ力',s:'例：文化祭の出店準備で、メンバーの士気が下がり、作業が停滞していた。本番2週間前なのに全体の30%しか準備が進んでいない状態だった。',t:'例：このまま進めても良いものができないという焦りがあったが、誰も声を上げなかった。',why:'例：誰かが悩んでいるのに声をかけない選択肢が、自分には思い浮かびません。',a:'例：個別に「何が不安か」を聞いて回った。その上で全体ミーティングを招集し、「成功した時の打ち上げ」を提案。役割分担を明確にした。',r:'例：チームの士気が再燃し、当日の売上目標も達成できた。',c:'例：「周りを巻き込み、士気を高める働きかけ力」を、御社のチームでも発揮したいです。'},
+  kadai:{emoji:'🔍',name:'課題発見力',s:'例：所属するゼミの論文提出率が、例年低いことが問題になっていた。毎年3〜4名が提出できずに終わっていた。',t:'例：原因が「テーマ設定の遅れ」にある可能性があると気づいたが、それを証明する方法を考えた。',why:'例：「なんとなくうまくいっていない」という状態を放置しておくことが、自分には耐えられません。',a:'例：過去の論文テーマ一覧を分析・分類し、新入生に配布する「テーマ発見シート」を自主的に作成・提案した。',r:'例：テーマ設定が早期化し、その年の論文提出率は過去最高の100%を達成した。',c:'例：「現状を分析し、問題の根本原因を発見する力」を、御社の企画職として活かしたいです。'},
+  keikaku:{emoji:'📅',name:'計画力',s:'例：大学3年次に、学業と週4日のアルバイト、TOEICの勉強を並行して進める必要があった。',t:'例：全てを並行してこなすには時間が足りず、どれかを犠牲にしなければならない状況だった。',why:'例：行き当たりばったりで失敗した経験が多く、「計画があれば防げた」という後悔を繰り返してきたからです。',a:'例：まず目標（TOEIC800点）を定め、逆算して月間・週間の学習計画を作成。通学中は単語学習、夜は問題集と時間をタスクで区切った。',r:'例：単位を一つも落とさず、アルバイトも継続しながら、TOEIC810点を達成できた。',c:'例：「目標から逆算して計画を立て、実行する力」を、御社の業務においても活かしたいです。'},
+  sozo:{emoji:'💡',name:'創造力',s:'例：地元の図書館でアルバイトをしていた際、若年層の来館者が減少しているという課題があった。',t:'例：従来のイベントでは若者を呼べておらず、「また同じ企画か」という空気が漂っていた。',why:'例：「こうするしかない」という思い込みに気づいた瞬間、別の方法を探したくなる性分です。',a:'例：「eスポーツ体験会」を企画・提案。来館者にデジタルで楽しむ新しい読書体験を提供した。',r:'例：若年層の来館者数が前月比2倍に増加し、新しい利用者層を開拓できた。',c:'例：「異なる要素を結びつけて新しい価値を生み出す創造力」を、御社の企画部門で活かしたい。'},
+  hasshin:{emoji:'🎤',name:'発信力',s:'例：グループワークで、議論が複雑化し、メンバーが混乱していた。発表まで残り3日なのに方向性が決まらない状態だった。',t:'例：このまま議論が続いても結論が出ず、発表に間に合わないという危機感があった。',why:'例：「わかった」という表情ではなく「わかったふり」をしている顔が見えた瞬間、黙っていられなくなります。',a:'例：議論を止め、「今、問題なのはA点とB点です」とホワイトボードに図解して説明。議論の交通整理を行った。',r:'例：メンバーから「頭がスッキリした」と言われ、その後の議論がスムーズに進んだ。',c:'例：「複雑な情報を整理し、分かりやすく伝える発信力」を、御社のクライアントへの提案業務などで活かしたいです。'},
+  keicho:{emoji:'👂',name:'傾聴力・共感力',s:'例：アルバイト先のカフェで、常連のお客様の様子がいつもと違うことに気づいた。表情が暗く、口数が少なかった。',t:'例：日々の会話からお客様の好みを記憶していたが、今日は何か違うと感じ、どう接するか迷っていた。',why:'例：「いつもと違う」と感じた瞬間、確認せずにいられない性格で、それが自然と傾聴につながっています。',a:'例：「甘さ控えめが好き」という好みを記憶していたため、新作の「甘さ控えめカスタマイズ」を会話の中でそっと提案した。',r:'例：非常に喜ばれ、「あなたがいるから来てるよ」という信頼の言葉を頂けた。',c:'例：「相手の言葉にならないニーズを汲み取る傾聴力」を、御社の営業職として活かしたいです。'},
+  junan:{emoji:'🌊',name:'柔軟性・適応力',s:'例：アルバイト先のレジで、急なシステムトラブルが発生し、行列ができてしまった。マニュアルに対応手順が載っていない事態だった。',t:'例：マニュアルにない事態で、対応を誤るとクレームになる可能性があった。',why:'例：「想定外だから仕方ない」という言葉で思考を止めることが、自分にはできません。',a:'例：即座に判断し、お客様に謝罪しつつ、手書きの伝票で対応するよう他のスタッフに指示した。',r:'例：大きな混乱なく乗り切ることができ、お客様からのクレームも最小限に抑えられた。',c:'例：「予期せぬ事態にも、今できる最善を考えて行動する柔軟性」を、御社のビジネス環境でも活かせます。'},
+  jokyo:{emoji:'🧭',name:'情況把握力',s:'例：サークルのミーティングで、特定のメンバーばかりが発言し、意見が偏っていると感じた。内気なメンバーが何も言えずに終わっていた。',t:'例：全員の意見を引き出さなければ、多角的な議論にならないという危機感があった。',why:'例：声の大きい人だけの意見で進んでしまう議論を見ていると、「全員の声を拾わなければ」という焦りがあります。',a:'例：全体の空気を読み、あえて「〇〇さんはどう思う？」と、まだ発言していないメンバーに話を振る「パス回し」の役割に徹した。',r:'例：全員から多様な意見を引き出すことができ、より良い結論に至った。',c:'例：「全体の状況を把握し、チームが円滑に機能するよう動く力」を、御社のプロジェクトでも発揮したいです。'},
+  kyochosei:{emoji:'🫂',name:'協調性・規律性',s:'例：サークルの合宿係として、会計係や企画係など、他の係と連携する必要があった。係をまたいだ情報共有がなく、準備が縦割りになっていた。',t:'例：係同士の情報共有が不足しており、このままでは準備に齟齬が生まれる恐れがあった。',why:'例：自分だけが動いても組織としての成果にならないことを、体験を通じて知っているからです。',a:'例：自分のタスクだけを考えるのではなく、常に他の係の進捗を気にかけ、「何か手伝えることはないか」と積極的に声をかけた。',r:'例：係同士の連携ミスがなくなり、合宿はトラブルなく成功した。',c:'例：「チーム全体の目標達成のために、周りと協力する協調性」を、御社でも発揮したいです。'},
+  keizoku:{emoji:'🔥',name:'継続力・忍耐力',s:'例：大学入学時、英語が苦手でTOEICのスコアが400点だった。就職活動で700点が必要になると知り、大きなギャップを感じた。',t:'例：就職活動に向けて700点以上が必要だとわかり、250点以上のギャップを埋める必要があった。',why:'例：「今日だけ休もう」という誘惑に負けた翌日の自分が嫌いで、続けることで自分を保っている感覚があります。',a:'例：「卒業までに700点」という目標を立て、1日1時間の学習を3年間欠かさず続けた。通学中の「スキマ時間」を単語学習に充てるなど習慣化した。',r:'例：3年次には750点を取得。大きな成果も日々の小さな積み重ねから生まれると学んだ。',c:'例：「目標達成のために、地道な努力をコツコツと継続する力」は、御社の業務においても着実な成果を出すために活かせます。'}
+};
+
+let prCurrentStr=null;
+function prGoScreen(n){[1,2].forEach(i=>{const el=document.getElementById('pr-screen'+i);if(el)el.classList.add('hidden');});const t=document.getElementById('pr-screen'+n);if(t)t.classList.remove('hidden');window.scrollTo(0,0);}
+function prSelectStr(key,el){
+  prCurrentStr=STRENGTHS[key];
+  document.querySelectorAll('.th-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');
+  document.getElementById('pr-form-emoji').textContent=prCurrentStr.emoji;
+  document.getElementById('pr-form-name').textContent=prCurrentStr.name;
+  ['s','t','why','a','r','c'].forEach(k=>setTxt('pr-ex-'+k,prCurrentStr[k]||''));
+  resetFields(['pr-inp-s','pr-inp-t','pr-inp-why','pr-inp-a','pr-inp-r','pr-inp-c']);
+  document.getElementById('pr-activity').value='';
+  document.getElementById('pr-result').classList.add('hidden');
+  document.getElementById('pr-result').innerHTML='';
+  hideErr('pr-error');prGoScreen(2);
+}
+function prGenerate(){
+  const activity=g('pr-activity'),s=g('pr-inp-s'),t=g('pr-inp-t'),why=g('pr-inp-why'),a=g('pr-inp-a'),r=g('pr-inp-r'),c=g('pr-inp-c');
+  if(!activity){showErr('pr-error','活動名を入力してください。');return;}
+  if(!s||!a||!r||!c){showErr('pr-error','状況・行動・結果・活用法を入力してください。');return;}
+  hideErr('pr-error');
+  const co=g('pr-company')||'指定なし',ind=g('pr-industry')||'指定なし',job=g('pr-job')||'指定なし',len=g('pr-length');
+  const whyTxt=why?`\n・なぜ動いたか（内面の動機）: ${why}`:'';
+  const tTxt=t?`\n・課題(T): ${t}`:'';
+  const step1=`# 命令\nあなたは大手企業の採用責任者です。\n以下の【自己PRドラフト】を元に、${co}（${ind}業界・${job}）の採用担当者が「この強みは自社でも再現性がある」と確信するベース文章を作成してください。\n\n${CORE}\n\n# 入力された自己PRドラフト\n・強み: ${prCurrentStr.name}\n・強みを発揮した活動: ${activity}\n・状況(S): ${s}${tTxt}${whyTxt}\n・行動(A): ${a}\n・結果(R): ${r}\n・入社後の活用法: ${c}\n\n# 制約条件\n1. 必ず「私の強みは、${activity}で培った${prCurrentStr.name}です。」という形式で始める\n2. 強みが${co}の業務環境でも発揮できることを論理的に示す\n3. なぜその行動をとったのかという内面の論理を自然に織り込む\n\n# 出力フォーマット（厳守）\n## 1. 自己PR・ベース文章\n## 2. 評価ポイント解説`;
+  const step2=`ありがとうございます。\n「1. 自己PR・ベース文章」を、**厳密に${len}文字以内**（±10%許容）に調整してください。\n・「${activity}で培った${prCurrentStr.name}」という書き出しは維持してください\n・文末は「〜です・〜ます」調で統一\n・最後に文字数カウントを記載（例：【395文字】）`;
+  showResult('pr-result',step1,step2);
+}
+function initSelects(){
+  ['pr-industry'].forEach(id=>{const s=document.getElementById(id);if(!s)return;INDUSTRIES.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});});
+  ['pr-job'].forEach(id=>{const s=document.getElementById(id);if(!s)return;JOBS.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});});
+}
+function g(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function setTxt(id,val){const e=document.getElementById(id);if(e)e.textContent=val||'';}
+function resetFields(ids){ids.forEach(id=>{const e=document.getElementById(id);if(e){e.value='';const c=document.getElementById(e.dataset.counter);if(c)c.textContent='0 文字';}});}
+function updateCnt(ta){const c=document.getElementById(ta.dataset.counter);if(c)c.textContent=ta.value.length+' 文字';}
+function copyEx(exId,taId){const ex=document.getElementById(exId),ta=document.getElementById(taId);if(!ex||!ta)return;ta.value=ex.textContent;updateCnt(ta);ta.focus();const existing=ta.parentNode.querySelector('.copy-hint-msg');if(existing)existing.remove();const hint=document.createElement('div');hint.className='copy-hint-msg show';hint.innerHTML='📋 <strong>サンプルをコピーしました！</strong>このまま使うのではなく、<strong>あなた自身の経験に書き換えて</strong>ください。';ta.parentNode.insertBefore(hint,ta);setTimeout(()=>{hint.classList.remove('show');setTimeout(()=>hint.remove(),300);},6000);}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.remove('hidden');}}
+function hideErr(id){const e=document.getElementById(id);if(e)e.classList.add('hidden');}
+function copyPrompt(id,btn){const ta=document.getElementById(id);if(!ta)return;ta.select();try{document.execCommand('copy');btn.textContent='コピー完了！';setTimeout(()=>btn.textContent='コピー',2000);}catch(e){}}
+function showResult(resultId,p1,p2){const el=document.getElementById(resultId);el.innerHTML=`<div class="prompt-block"><h4>📋 STEP 1｜Claude.aiに貼り付けるプロンプト</h4><p>以下をそのままClaude.aiにコピー&ペーストしてください。</p><textarea class="prompt-textarea" id="${resultId}-p1" readonly>${p1}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p1',this)">コピー</button></div></div><div class="prompt-block"><h4>📋 STEP 2｜AI回答後に続けて貼り付けるプロンプト</h4><p>STEP1の回答を受け取ったら、続けて以下を貼り付けてください。</p><textarea class="prompt-textarea" id="${resultId}-p2" readonly>${p2}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p2',this)">コピー</button></div></div>`;el.classList.remove('hidden');el.scrollIntoView({behavior:'smooth',block:'start'});}
+window.onload=()=>initSelects();
+</script>
+</body>
+</html>

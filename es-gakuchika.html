@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ガクチカ作成支援｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;
+  --amber:#e9c46a;--amber-dark:#c9a227;--amber-light:#f4d58d;
+  --brown-mid:#6f4e37;--brown-light:#c69c6d;
+  --cream:#fffdf8;--bg:#f2f7f4;
+  --gray:#6b7c6b;--text:#1a2a1a;
+  --shadow:0 4px 24px rgba(0,0,0,0.09);--shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+  --radius:16px;--radius-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+.hero{background:linear-gradient(160deg,var(--green-deepest) 0%,var(--green-dark) 40%,var(--green-mid) 100%);padding:28px 24px 36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2352b788' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.hero-brand{display:flex;align-items:center;gap:14px;}
+.hero-tree{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:900;color:white;letter-spacing:.08em;text-shadow:0 2px 8px rgba(0,0,0,0.3);}
+.hero-subtitle{font-size:.72rem;color:var(--green-pale);margin-top:4px;letter-spacing:.05em;}
+.hero-badge{background:rgba(233,196,106,0.2);border:1px solid var(--amber);color:var(--amber-light);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:.05em;}
+.hero-desc{font-size:.85rem;color:rgba(255,255,255,0.85);line-height:1.7;}
+.hero-desc strong{color:var(--amber-light);}
+.hero-section-tag{display:inline-block;background:rgba(82,183,136,0.25);border:1px solid var(--green-light);color:var(--green-pale);font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 60px;}
+
+.card-grid-3{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:6px;}
+@media(min-width:560px){.card-grid-3{grid-template-columns:repeat(3,1fr);gap:14px;}}
+.cat-label{font-size:.76rem;font-weight:700;color:var(--green-mid);background:#e8f5e0;border-radius:20px;padding:3px 12px;display:inline-block;margin:14px 0 10px;}
+.th-card{background:white;border-radius:var(--radius-sm);padding:18px 12px 16px;text-align:center;cursor:pointer;transition:all .22s ease;box-shadow:0 2px 10px rgba(0,0,0,.06);border:2px solid #e4ede4;position:relative;}
+.th-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--green-light);}
+.th-card.selected{border-color:var(--green-mid);background:#f0faf3;}
+.th-card.selected::after{content:'✓';position:absolute;top:7px;right:9px;color:var(--green-mid);font-weight:700;font-size:.82rem;}
+.th-emoji{font-size:2.2rem;display:block;margin-bottom:7px;line-height:1;}
+.th-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.4;}
+.th-sub{font-size:.7rem;color:var(--gray);margin-top:3px;line-height:1.3;}
+
+.sec-title{margin-bottom:20px;}
+.sec-title h2{font-family:'Noto Serif JP',serif;font-size:1.25rem;color:var(--green-dark);margin-bottom:4px;}
+.sec-title p{font-size:.83rem;color:var(--gray);line-height:1.6;}
+.sec-badge{display:inline-block;background:var(--green-pale);color:var(--green-dark);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+
+.form-wrap{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px 30px;margin-top:6px;}
+.form-selected-badge{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f0faf3;border:2px solid var(--green-mid);border-radius:var(--radius-sm);margin-bottom:22px;}
+.form-sel-emoji{font-size:1.8rem;}
+.form-sel-name{font-size:1rem;font-weight:700;color:var(--green-dark);}
+.form-sel-sub{font-size:.75rem;color:var(--gray);margin-top:2px;}
+
+.step-lbl{font-weight:bold;color:#005a9c;margin-bottom:14px;font-size:.9rem;display:block;}
+.why-hint{background:#fffbee;border-left:4px solid var(--amber);padding:8px 12px;font-size:.8em;color:#7a5c00;line-height:1.7;margin-bottom:8px;border-radius:0 6px 6px 0;}
+.activity-box{background:#eef9ff;padding:14px;border-radius:8px;border:2px solid #b0c4de;margin-bottom:22px;}
+.activity-box label{color:#005a9c!important;font-weight:bold;font-size:.9rem;display:block;margin-bottom:7px;}
+.activity-box input{width:100%;padding:9px 11px;border:1px solid #b0c4de;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;}
+
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-weight:bold;margin-bottom:7px;color:#2c3e50;font-size:.9rem;}
+.form-group textarea{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;min-height:88px;resize:vertical;line-height:1.65;}
+.form-group textarea:focus,.activity-box input:focus{outline:none;border-color:var(--green-light);box-shadow:0 0 0 3px rgba(82,183,136,.1);}
+.form-group input[type="text"]{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;}
+.char-counter{display:block;text-align:right;font-size:.8em;color:#999;margin-top:4px;}
+
+.example-box{background:#f4f8ff;border:1px dashed #b0c4de;border-radius:6px;padding:9px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;}
+.example-text{flex:1;margin:0;font-size:.85em;color:#444;line-height:1.55;}
+.btn-copy-ex{flex-shrink:0;background:white;border:1px solid #007bff;color:#007bff;border-radius:5px;padding:4px 8px;font-size:.78em;font-weight:bold;cursor:pointer;white-space:nowrap;}
+.btn-copy-ex:hover{background:#f0f8ff;}
+
+.target-inputs{display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:14px;}
+@media(min-width:540px){.target-inputs{grid-template-columns:repeat(3,1fr);}}
+.form-control{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;font-size:.86rem;font-family:'Noto Sans JP',sans-serif;background:white;-webkit-appearance:none;appearance:none;}
+select.form-control{background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22%3E%3Cpath fill%3D%22%232d6a4f%22 d%3D%22M6 8L1 3h10z%22%2F%3E%3C%2Fsvg%3E');background-repeat:no-repeat;background-position:right 9px center;padding-right:26px;cursor:pointer;}
+.btn-generate{display:block;width:100%;padding:13px;background:linear-gradient(135deg,var(--green-mid),var(--green-dark));color:white;border:none;border-radius:8px;font-size:.98rem;font-weight:bold;cursor:pointer;font-family:'Noto Sans JP',sans-serif;letter-spacing:.05em;box-shadow:0 4px 15px rgba(45,106,79,.35);transition:all .2s;margin-top:4px;}
+.btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,106,79,.4);}
+
+.result-area{margin-top:22px;padding-top:22px;border-top:2px solid #e8f0e8;}
+.prompt-block{margin-bottom:18px;}
+.prompt-block h4{font-size:.9rem;font-weight:700;color:var(--green-dark);border-left:4px solid var(--green-mid);padding-left:9px;margin-bottom:7px;}
+.prompt-block p{font-size:.8rem;color:var(--gray);margin-bottom:7px;}
+.prompt-textarea{width:100%;min-height:140px;background:#f8f8f8;border:1px solid #ddd;border-radius:7px;padding:9px;font-family:'Courier New',monospace;font-size:.76rem;line-height:1.6;resize:vertical;color:#333;}
+.btn-copy-prompt{float:right;margin-top:6px;background:#28a745;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-copy-prompt:hover{background:#218838;}
+.clearfix::after{content:'';display:table;clear:both;}
+
+.nav-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn-back{background:#6c757d;color:white;border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-back:hover{background:#5a6268;}
+.btn-claude{background:var(--amber);color:var(--green-dark);border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;}
+.btn-claude:hover{background:var(--amber-dark);color:white;}
+
+.keiji-card{background:linear-gradient(135deg,#f0faf3,#e8f5e0);border:1px solid #b8ddb8;border-radius:var(--radius-sm);padding:18px 20px;margin-top:22px;font-size:.82rem;line-height:1.8;color:#2a4a2a;}
+.keiji-name{font-weight:700;color:var(--green-mid);font-size:.83rem;margin-bottom:5px;}
+.keiji-question{background:#f0faf3;border-left:4px solid var(--green-light);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px;font-size:.82rem;color:#2a4a2a;line-height:1.7;}
+.keiji-question .keiji-q-label{font-weight:700;color:var(--green-mid);font-size:.78rem;display:block;margin-bottom:5px;}
+.keiji-question ul{margin:0;padding-left:1.2em;}
+.keiji-question ul li{margin-bottom:2px;}
+
+.why-required-badge{display:inline-block;background:var(--amber-dark,#c9a227);color:white;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.why-hint{background:#fffbee;border-left:4px solid var(--amber);padding:9px 13px;font-size:.8em;color:#7a5c00;line-height:1.75;margin-bottom:8px;border-radius:0 6px 6px 0;}
+.form-group.why-group{background:#fffdf4;border:1px solid #e9c46a;border-radius:8px;padding:12px 14px 8px;margin-bottom:20px;}
+.self-first-hint{font-size:.75rem;color:var(--gray);text-align:center;margin-bottom:6px;font-style:italic;}
+.example-box-later{margin-top:8px;}
+
+.copy-hint-msg{display:none;background:#fffbee;border:2px solid var(--amber);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.83rem;color:#7a5c00;line-height:1.6;animation:hintFadeIn .3s ease;}
+.copy-hint-msg.show{display:block;}
+@keyframes hintFadeIn{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.anim-in{animation:fadeSlideIn .3s ease both;}
+.error-msg{color:#c0392b;font-weight:bold;text-align:center;padding:10px;font-size:.88rem;}
+.hidden{display:none!important;}
+
+.progress-wrap{background:#e8f0e8;border-radius:20px;height:6px;margin-bottom:24px;overflow:hidden;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--green-light),var(--green-mid));border-radius:20px;transition:width .4s ease;}
+
+.footer{text-align:center;padding:24px 16px;font-size:.75rem;color:var(--gray);line-height:1.8;border-top:1px solid #d8e8d8;margin-top:40px;}
+.footer strong{color:var(--green-mid);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-brand">
+        <span class="hero-tree">🌱</span>
+        <div>
+          <div class="hero-title">就活の木｜ES作成支援</div>
+          <div class="hero-subtitle">STAR＋WHY＋F&C メソッド</div>
+        </div>
+      </div>
+      <div class="hero-badge">APIキー不要</div>
+    </div>
+    <div class="hero-section-tag">🎯 ガクチカ・経験</div>
+    <p class="hero-desc"><strong>「金太郎飴ES」を卒業して、あなただけの言葉で書こう。</strong><br>
+    カードを選んで、STAR＋WHYを入力するだけで、採用担当者に「会ってみたい」と思わせるプロンプトが自動生成されます。</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SCREEN 1: テーマカード -->
+  <div id="gk-screen1">
+    <div class="sec-title">
+      <span class="sec-badge">🎯 ガクチカ・経験</span>
+      <h2>ガクチカのテーマを選んでください</h2>
+      <p>あなたが書きたい活動・経験のカードをクリックしてください。</p>
+    </div>
+    <div id="gk-theme-grid-top" class="card-grid-3"></div>
+    <div class="keiji-card" style="margin-top:16px;">
+      <div class="keiji-name">🌱 キャリ爺より</div>
+      特別なことでなくても大丈夫。アルバイト・ゼミ・サークル——あなたの日常の中に、採用担当者が「会いたい」と思う話が必ずあります。
+    </div>
+  </div>
+
+  <!-- SCREEN 2: フォーム -->
+  <div id="gk-screen2" class="hidden">
+    <div class="form-wrap">
+      <div class="form-selected-badge">
+        <span class="form-sel-emoji" id="gk-form-emoji"></span>
+        <div><div class="form-sel-name" id="gk-form-name"></div><div class="form-sel-sub">例文をコピーして編集するか、直接入力してください。</div></div>
+      </div>
+      <span class="step-lbl">【STEP 1】あなた自身の言葉で入力してください</span>
+
+      <div class="form-group">
+        <label>【S】Situation（状況）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：まず思い出してみて</span>
+          <ul><li>いつ・どこで・誰と・何をしていた？</li><li>どんな雰囲気・どんな規模だった？</li><li>数字や固有名詞を入れると伝わりやすくなるよ。</li></ul>
+        </div>
+        <textarea id="gk-inp-s" data-counter="gk-cnt-s" oninput="updateCnt(this)" placeholder="いつ・どこで・誰と・何をしていましたか？（規模・期間・人数などの数字も入れると伝わりやすいです）"></textarea>
+        <span id="gk-cnt-s" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-s"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-s','gk-inp-s')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【T】Task（課題・困ったこと）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：正直に教えて</span>
+          <ul><li>そのとき、困ったことや「うまくいかないな」と感じた場面はあった？</li><li>お客さんや上司から何か言われたことはある？</li><li>「なんでこうなるんだろう」とモヤモヤした瞬間は？</li></ul>
+        </div>
+        <textarea id="gk-inp-t" data-counter="gk-cnt-t" oninput="updateCnt(this)" placeholder="そのとき、一番困ったこと・うまくいかなかったことは何でしたか？（「なんとなく変だな」と感じた場面でもOKです）"></textarea>
+        <span id="gk-cnt-t" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-t"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-t','gk-inp-t')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group why-group">
+        <label id="gk-why-label">💡 なぜ、あなたはその課題を放っておけなかったのですか？<span class="why-required-badge">ここが核心</span></label>
+        <div class="why-hint">T（課題）からA（行動）への橋渡しになる部分です。「以前〜という経験があったので」「もともと〜な性格で」など、あなたが動いた理由を一言加えると、採用担当者に「この人に会いたい」と思わせる核心になります。</div>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：一番大事なところ。ゆっくり考えて</span>
+          <ul><li>そのとき「このままじゃダメだ」と思ったのはなぜ？</li><li>子どもの頃や学生生活で、似たような経験をしたことはある？</li><li>「黙っていられなかった」理由を、正直な言葉で。</li></ul>
+        </div>
+        <textarea id="gk-inp-why" data-counter="gk-cnt-why" oninput="updateCnt(this)" placeholder="なぜ、あなたはその課題を放っておけなかったのですか？（「〜だったから」という感情や原体験を正直に）"></textarea>
+        <span id="gk-cnt-why" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-why"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-why','gk-inp-why')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【A】Action（行動）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：あなたが「動いた」ことを教えて</span>
+          <ul><li>その課題に対して、あなたは具体的に何をした？</li><li>なぜその方法を選んだの？他にも方法はあったのに。</li><li>うまくいかなかった試みや、試行錯誤があれば、それも書いてみて。</li></ul>
+        </div>
+        <textarea id="gk-inp-a" data-counter="gk-cnt-a" oninput="updateCnt(this)" placeholder="あなたが実際にとった行動を教えてください。（「私が〜した」と主語を自分にして、工夫・こだわりが伝わるように）"></textarea>
+        <span id="gk-cnt-a" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-a"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-a','gk-inp-a')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【R】Result（結果）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：どう変わった？</span>
+          <ul><li>行動した結果、何がどう変わった？</li><li>数字で言えるなら数字で（〇%改善、〇人が〜など）。</li><li>数字が出なくても、誰かの言葉や表情の変化でもOK。</li></ul>
+        </div>
+        <textarea id="gk-inp-r" data-counter="gk-cnt-r" oninput="updateCnt(this)" placeholder="どんな結果・変化がありましたか？（数字で表せる結果＋周りの反応や自分の気づきも加えると深みが出ます）"></textarea>
+        <span id="gk-cnt-r" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-r"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-r','gk-inp-r')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【F&C】Follow &amp; Connect（入社後の活かし方）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">🌱 キャリ爺から：仕事でどう使える？</span>
+          <ul><li>この経験で身についた力を、入社後どんな場面で使えそう？</li><li>「貢献したいです」だけで終わらず、具体的な場面を想像して書こう。</li></ul>
+        </div>
+        <textarea id="gk-inp-fc" data-counter="gk-cnt-fc" oninput="updateCnt(this)" placeholder="この経験で培った力を、入社後どんな場面で活かせると思いますか？（「〜力を、御社の〇〇で活かしたい」という形で）"></textarea>
+        <span id="gk-cnt-fc" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 書けたら、参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="gk-ex-fc"></p><button class="btn-copy-ex" onclick="copyEx('gk-ex-fc','gk-inp-fc')">参考にコピー</button></div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #e8f0e8;margin:20px 0;">
+      <span class="step-lbl">【STEP 2】ターゲット・文字数設定</span>
+      <div class="target-inputs">
+        <select id="gk-industry" class="form-control"><option value="">業界（任意）</option></select>
+        <input type="text" id="gk-company" class="form-control" placeholder="企業名（任意）">
+        <select id="gk-job" class="form-control"><option value="">職種（任意）</option></select>
+      </div>
+      <div class="form-group">
+        <select id="gk-length" class="form-control">
+          <option value="指定なし">指定なし</option>
+          <option value="200">200文字</option>
+          <option value="400" selected>400文字</option>
+          <option value="600">600文字</option>
+          <option value="800">800文字</option>
+        </select>
+      </div>
+      <button class="btn-generate" onclick="gkGenerate()">🤖 AI添削プロンプトを生成する</button>
+      <div id="gk-error" class="error-msg hidden"></div>
+      <div id="gk-result" class="result-area hidden"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="gkGoScreen(1)">← テーマ選択に戻る</button>
+      <a href="https://claude.ai/new" target="_blank" class="btn-claude">🤖 Claude.aiを開く</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>🌱 就活の木</strong>｜ガクチカ作成支援ツール<br>
+  「仕事を通して必要とされる生き方を、自分の手で作り上げていくこと」——それが、就職の本質です。<br>
+  <span style="margin-top:6px;display:block;color:#a0b0a0;">君は、一人じゃない。いつでも、目の前のキャリア支援課の扉は開いているよ。——キャリ爺</span>
+</div>
+
+<script>
+const INDUSTRIES=['IT・ソフトウェア・通信','メーカー（製造）','商社','小売・外食','金融（銀行・証券・保険）','マスコミ（広告・出版・放送）','サービス・コンサル','インフラ（運輸・電力・ガス）','官公庁・団体','その他'];
+const JOBS=['営業','企画・マーケティング','事務・アシスタント（一般職）','エンジニア・技術職（IT・WEB）','技術職（メーカー）','販売・サービス','専門職（コンサル・金融など）','クリエイティブ（デザイン・制作）','その他'];
+const CORE=`【最重要指示：「等身大」の文章にすること】
+・「積極的に」「粘り強く」「貢献したい」などの抽象語を具体的な行動・場面に置き換える
+・失敗・葛藤・迷った場面を自然に組み込み、人間らしさを出す
+・「業界トップ」「グローバル展開」などの企業礼賛フレーズを削除する
+・T（課題）からA（行動）への橋渡しとして、本人の内面の動機・人格的根拠を必ず文章に織り込む
+・添削後も「本人の原文の感情・視点・言葉の選択」を最大限残す`;
+
+const THEMES=[
+  {key:'arbeit',emoji:'☕',title:'カフェ・飲食店\nアルバイト',sub:'接客・改善提案',s:'例：カフェのアルバイトで、新人の教育係をしていた。常連客はいたが新人定着率が低く、月に1〜2名が辞めていく状況だった。',t:'例：新人がすぐに辞めてしまい、定着率が低いことが課題だった。入社後3ヶ月以内の離職が全体の60%を占めていた。',why:'例：新人が辞めていく様子を見て「自分が助けられた恩を返したい」という気持ちが自然に湧き上がったからです。',a:'例：マニュアルが分かりにくいと考え、図や写真入りのものに改訂した。また、週に1回、新人と1対1で話す時間を設けた。',r:'例：半年後、新人の定着率が30%から70%に改善した。新人からも「不安が減った」と言ってもらえた。',fc:'例：この経験で培った「課題を発見し、主体的に改善する力」を、御社の業務でも活かし、サービスの向上に貢献したいです。'},
+  {key:'arbeit_new',emoji:'🍺',title:'居酒屋\nアルバイト（強化）',sub:'売上改善・仕組み化',s:'例：個人経営の居酒屋で、売上が低迷し、店内に活気がなかった。週末でも席の7割しか埋まらない状態が続いていた。',t:'例：お客様の「回転率の悪さ」と、スタッフの「仕事へのモチベーションの低下」が課題だった。',why:'例：「なんとなくうまくいっていない」という状況を放置できない性格で、原因を突き止めるまで気が済まないタイプです。',a:'例：接客の質を上げるため、「お客様の属性を3つに分類」し、各属性に合わせた声かけマニュアルを自作し、全員に実践を促した。',r:'例：客単価が5%向上。スタッフの接客意識も高まり、活気が戻った。',fc:'例：「現場の課題を分析し、小さな改善を積み重ねて組織を変革する力」を、御社の顧客満足度向上に貢献したい。'},
+  {key:'conveni',emoji:'🏪',title:'コンビニ\nアルバイト',sub:'接客・オペレーション改善',s:'例：コンビニエンスストアで2年間アルバイトをしていた。レジ・品出し・在庫管理など多岐にわたる業務を担当していた。',t:'例：レジ待ち時間が長く、お客様からのクレームが週に2〜3件発生していることが課題だった。',why:'例：お客様が舌打ちして去っていく場面を見るたびに、「自分なら変えられる」という気持ちが抑えられませんでした。',a:'例：レジ操作の手順を見直し、スムーズな会計の流れをスタッフ全員で共有した。また、混雑時間帯を分析しシフト配置を最適化するよう店長に提案した。',r:'例：レジ待ち時間が平均2分から50秒に短縮され、クレームが月1件以下に減少した。店長から「改善提案が助かった」と評価された。',fc:'例：「現場の問題を数字で把握し、改善策を提案・実行する力」を、御社の業務効率化に活かしたいです。'},
+  {key:'back',emoji:'📦',title:'品出し・\nバックヤード',sub:'在庫管理・業務改善',s:'例：スーパーの品出し・バックヤード管理のアルバイトを1年半続けた。在庫管理・発注補助・商品陳列を担当していた。',t:'例：在庫の過不足が頻繁に発生し、品切れによる機会損失と廃棄ロスが同時に起きているという矛盾した状況が課題だった。',why:'例：同じミスが繰り返されることへのもどかしさと、「自分が仕組みを変えれば防げる」という確信がありました。',a:'例：過去の在庫データと売れ筋を独自に記録し、曜日・天候・イベントとの相関を分析。発注タイミングと数量の目安をまとめた「発注チェックシート」を作成し、バイトリーダーに提案した。',r:'例：廃棄ロスが月次で20%削減され、品切れによるクレームも半減した。',fc:'例：「数字を根拠にした改善提案力」を、御社の業務改善に活かしたいです。'},
+  {key:'circle',emoji:'🎾',title:'サークル・\n部活動',sub:'チーム運営・目標達成',s:'例：テニスサークルで、新入生を集める「新歓係」のリーダーだった。前年の入部者は20名で、今年は30名を目標としていた。',t:'例：例年、新入生の入部数が減少傾向にあることが課題だった。SNSでの発信が弱く、大学内での認知度が低い状態だった。',why:'例：サークルを続けてきた先輩たちの努力を、自分の代で途絶えさせたくないという責任感がありました。',a:'例：SNSでの魅力発信を強化した。また、大学の全クラスを回ってビラを配る「対面」も復活させた。',r:'例：前年比1.5倍の30名の新入生が入部し、サークルの活気を取り戻した。',fc:'例：「対面」と「SNS」を使った広報活動の経験を活かし、御社の営業活動においても多角的なアプローチで成果を出したいです。'},
+  {key:'zemi',emoji:'📚',title:'ゼミ・研究\n（標準）',sub:'共同研究・論文作成',s:'例：経済学部のゼミで、〇〇に関する共同研究（3人チーム）に取り組んでいた。半年間でのデータ収集・分析・発表が課題だった。',t:'例：研究の中間発表で、教授から「データ分析が浅い」と厳しいフィードバックを受けた。残り2ヶ月で分析を大幅に深める必要があった。',why:'例：教授から「浅い」と言われた瞬間、悔しさより「どこが浅いのか知りたい」という好奇心が先に湧いてきました。',a:'例：チームの分析手法を見直し、新たに統計ソフト（SPSS）を学習して導入。メンバーと毎日進捗を共有し、分析をやり直した。',r:'例：最終発表では「説得力のある分析だ」と高評価を得て、ゼミの優秀論文に選ばれた。',fc:'例：データに基づいた戦略立案に貢献したいです。'},
+  {key:'zemi_new',emoji:'💻',title:'ゼミ・研究\n（データ・IT系）',sub:'プログラミング・分析',s:'例：専門外の研究分野（データサイエンス）のゼミに飛び込み、周りのメンバーとの知識格差に直面した。入学時はプログラミング経験ゼロだった。',t:'例：基礎知識がないため、チームの議論についていけず、貢献できないことに焦りを感じた。',why:'例：「わからないから仕方ない」という言い訳を自分に使うのが嫌で、できるようになるまでやるしかないと思いました。',a:'例：毎日2時間、オンライン学習サービスを利用して基礎学習を徹底。先輩に週一度質問する時間を設けてキャッチアップした。',r:'例：半年後、チームの機能開発を任せられるレベルに到達。計画的な学習習慣が身についた。',fc:'例：「未知の領域でも、自己学習を通じてキャッチアップする成長意欲」を、御社の業務に活かしたい。'},
+  {key:'intern',emoji:'🏢',title:'インターン\nシップ',sub:'実務体験・提案',s:'例：IT企業の夏期インターン（5日間）で、新規アプリの企画を体験した。4人チームで最終日にプレゼンをする形式だった。',t:'例：チームの意見が最後までまとまらず、企画が中途半端になる恐れがあった。',why:'例：議論が空中戦になっていくのを見ていると、「誰かが整理しなければ」という衝動が自然と湧いてきます。',a:'例：自分が書記役となり、全員の意見をホワイトボードに可視化。「共通点」と「対立点」を整理し、両方の良さを活かす第3の案を提案した。',r:'例：最終日のプレゼンで社員から「学生らしいユニークな視点だ」と評価された。',fc:'例：「調整力」を、御社のプロジェクトマネジメント業務で活かしたいです。'},
+  {key:'ryugaku',emoji:'✈️',title:'留学',sub:'語学・異文化体験',s:'例：大学を休学し、1年間アメリカへ語学留学した。出発前のTOEICは600点で、英語での日常会話も満足にできなかった。',t:'例：留学当初、現地の学生の輪に入れず、語学学校の日本人とばかり過ごしてしまう課題があった。',why:'例：日本人コミュニティに逃げ込むたびに「このまま帰ったら後悔する」という声が頭の中で鳴り続けていました。',a:'例：「1日3人、必ず現地の人に話しかける」というルールを自分に課した。また、大学のボランティア活動に自ら参加し、英語を話す環境に飛び込んだ。',r:'例：帰国時にはTOEICのスコアが300点向上（600→900点）。現地の友人もでき、多様性を受け入れる姿勢が身についた。',fc:'例：多様な文化背景を持つ人々と協働した経験を活かし、御社のグローバル事業の拡大に貢献したいと考えています。'},
+  {key:'volunteer',emoji:'🤲',title:'ボランティア',sub:'地域・社会貢献',s:'例：地域の子供食堂で、学習支援のボランティアを2年間続けている。週1回2時間、小中学生10名程度の宿題サポートを担当している。',t:'例：内気でなかなか心を開いてくれない子供がおり、どう接するかが課題だった。',why:'例：自分が子供の頃、うまく話せなかった経験があり、その子の気持ちが自分ごとのように感じられました。',a:'例：無理に話しかけず、まずは自分が隣で黙々と勉強する姿を見せた。その子が好きなアニメの話題を振るなど、共通の接点を探す努力をした。',r:'例：半年後、その子から「ここに来るのが楽しい」と言ってもらえた。',fc:'例：「待つ姿勢」で信頼を築いた経験を活かし、お客様一人ひとりに寄り添った丁寧な対応を実現したいです。'}
+];
+
+function initSelects(){
+  const indIds=['gk-industry'],jobIds=['gk-job'];
+  indIds.forEach(id=>{const sel=document.getElementById(id);if(!sel)return;INDUSTRIES.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});});
+  jobIds.forEach(id=>{const sel=document.getElementById(id);if(!sel)return;JOBS.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});});
+}
+function initTopGrid(){
+  const grid=document.getElementById('gk-theme-grid-top');
+  if(!grid)return;
+  grid.innerHTML='';
+  THEMES.forEach(th=>{
+    const card=document.createElement('div');
+    card.className='th-card';
+    card.innerHTML=`<span class="th-emoji">${th.emoji}</span><div class="th-name">${th.title.replace(/\n/,'<br>')}</div><div class="th-sub">${th.sub}</div>`;
+    card.onclick=()=>selectTheme(th,card);
+    grid.appendChild(card);
+  });
+}
+function selectTheme(th,cardEl){
+  document.querySelectorAll('.th-card').forEach(c=>c.classList.remove('selected'));
+  cardEl.classList.add('selected');
+  document.getElementById('gk-form-emoji').textContent=th.emoji;
+  document.getElementById('gk-form-name').textContent=th.title.replace(/\n/,' ');
+  document.getElementById('gk-why-label').textContent='💡 なぜ、あなたはその課題を放っておけなかったのですか？';
+  setTxt('gk-ex-s',th.s);setTxt('gk-ex-t',th.t);setTxt('gk-ex-why',th.why);
+  setTxt('gk-ex-a',th.a);setTxt('gk-ex-r',th.r);setTxt('gk-ex-fc',th.fc);
+  resetFields(['gk-inp-s','gk-inp-t','gk-inp-why','gk-inp-a','gk-inp-r','gk-inp-fc']);
+  document.getElementById('gk-result').classList.add('hidden');
+  document.getElementById('gk-result').innerHTML='';
+  hideErr('gk-error');
+  gkGoScreen(2);
+}
+function gkGoScreen(n){
+  [1,2].forEach(i=>{const el=document.getElementById('gk-screen'+i);if(el)el.classList.add('hidden');});
+  const target=document.getElementById('gk-screen'+n);if(target)target.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function g(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function setTxt(id,val){const e=document.getElementById(id);if(e)e.textContent=val||'';}
+function resetFields(ids){ids.forEach(id=>{const e=document.getElementById(id);if(e){e.value='';const c=document.getElementById(e.dataset.counter);if(c)c.textContent='0 文字';}});}
+function updateCnt(ta){const c=document.getElementById(ta.dataset.counter);if(c)c.textContent=ta.value.length+' 文字';}
+function copyEx(exId,taId){
+  const ex=document.getElementById(exId),ta=document.getElementById(taId);
+  if(!ex||!ta)return;
+  ta.value=ex.textContent;updateCnt(ta);ta.focus();
+  const existing=ta.parentNode.querySelector('.copy-hint-msg');
+  if(existing)existing.remove();
+  const hint=document.createElement('div');
+  hint.className='copy-hint-msg show';
+  hint.innerHTML='📋 <strong>サンプルをコピーしました！</strong>このまま使うのではなく、<strong>あなた自身の経験に書き換えて</strong>ください。採用担当者はすぐに気づきます。';
+  ta.parentNode.insertBefore(hint,ta);
+  setTimeout(()=>{hint.classList.remove('show');setTimeout(()=>hint.remove(),300);},6000);
+}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.remove('hidden');}}
+function hideErr(id){const e=document.getElementById(id);if(e)e.classList.add('hidden');}
+function copyPrompt(id,btn){const ta=document.getElementById(id);if(!ta)return;ta.select();try{document.execCommand('copy');btn.textContent='コピー完了！';setTimeout(()=>btn.textContent='コピー',2000);}catch(e){}}
+
+function gkGenerate(){
+  const s=g('gk-inp-s'),t=g('gk-inp-t'),why=g('gk-inp-why'),a=g('gk-inp-a'),r=g('gk-inp-r'),fc=g('gk-inp-fc');
+  if(!s||!t||!a||!r||!fc){showErr('gk-error','S・T・A・R・F&Cを入力してください。');return;}
+  hideErr('gk-error');
+  const co=g('gk-company')||'指定なし',ind=g('gk-industry')||'指定なし',job=g('gk-job')||'指定なし',len=g('gk-length');
+  const whyTxt=why?`\n・なぜ動いたか（内面の動機）: ${why}`:'';
+  const step1=`# 命令\nあなたは大手企業の採用責任者です。\n以下の【学生のガクチカドラフト】を元に、${co}（${ind}業界・${job}）の採用担当者が「会ってみたい」と思うガクチカのベース文章を作成してください。\n\n${CORE}\n\n# 入力されたガクチカドラフト\n・状況(S): ${s}\n・課題(T): ${t}${whyTxt}\n・行動(A): ${a}\n・結果(R): ${r}\n・学びと活用(F&C): ${fc}\n\n# 制約条件\n1. T（課題）からA（行動）への移行に「なぜそう動いたのか」という人格的根拠を必ず組み込む\n2. 課題解決能力と再現性の観点で文章を強化する\n3. 「〜力を学びました」のような紋切り型の結論を本人の言葉に変換する\n\n# 出力フォーマット（厳守）\n## 1. ガクチカ・ベース文章\n## 2. 面接官に刺さるポイント解説`;
+  const step2=`ありがとうございます。\n「1. ガクチカ・ベース文章」を、**厳密に${len}文字以内**（±10%許容）に調整してください。\n・「なぜそう動いたのか」という内面の動機は削らないでください\n・文末は「〜です・〜ます」調で統一\n・最後に文字数カウントを記載（例：【395文字】）`;
+  showResult('gk-result',step1,step2);
+}
+function showResult(resultId,p1,p2){
+  const el=document.getElementById(resultId);
+  el.innerHTML=`<div class="prompt-block"><h4>📋 STEP 1｜Claude.aiに貼り付けるプロンプト</h4><p>以下をそのままClaude.aiにコピー&ペーストしてください。</p><textarea class="prompt-textarea" id="${resultId}-p1" readonly>${p1}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p1',this)">コピー</button></div></div><div class="prompt-block"><h4>📋 STEP 2｜AI回答後に続けて貼り付けるプロンプト</h4><p>STEP1の回答を受け取ったら、続けて以下を貼り付けてください。</p><textarea class="prompt-textarea" id="${resultId}-p2" readonly>${p2}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p2',this)">コピー</button></div></div>`;
+  el.classList.remove('hidden');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+window.onload=()=>{
+  initSelects();
+  initTopGrid();
+};
+</script>
+</body>
+</html>

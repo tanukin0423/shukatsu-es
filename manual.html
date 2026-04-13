@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使い方マニュアル｜ES作成支援カードツール｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root {
+  --green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;
+  --amber:#e9c46a;--amber-dark:#c9a227;--amber-light:#f4d58d;
+  --bg:#f0f7f3;--gray:#6b7c6b;--text:#1a2a1a;
+  --shadow:0 4px 20px rgba(0,0,0,0.09);--radius:14px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ===== TOP HEADER ===== */
+.page-header {
+  background:linear-gradient(155deg,var(--green-deepest) 0%,var(--green-dark) 50%,var(--green-mid) 100%);
+  padding:28px 24px 36px;text-align:center;position:relative;overflow:hidden;
+}
+.page-header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%2352b788' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.page-header-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.page-header h1{font-family:'Noto Serif JP',serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight:900;color:white;letter-spacing:.06em;margin-bottom:8px;}
+.page-header p{font-size:.85rem;color:var(--green-pale);line-height:1.7;}
+.header-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+.hbadge{font-size:.72rem;font-weight:700;padding:4px 14px;border-radius:20px;}
+.hbadge-a{background:rgba(233,196,106,0.2);border:1px solid var(--amber);color:var(--amber-light);}
+.hbadge-g{background:rgba(82,183,136,0.2);border:1px solid var(--green-light);color:var(--green-pale);}
+.print-btn{
+  margin-top:18px;
+  display:inline-block;
+  background:var(--amber);color:var(--green-dark);
+  padding:8px 22px;border-radius:8px;
+  font-size:.82rem;font-weight:700;cursor:pointer;border:none;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.print-btn:hover{background:var(--amber-dark);color:white;}
+
+/* ===== WRAP ===== */
+.wrap{max-width:860px;margin:0 auto;padding:28px 16px 72px;}
+
+/* ===== 概要ボックス ===== */
+.overview-box{
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:26px 28px;margin-bottom:32px;
+  border-left:5px solid var(--green-mid);
+}
+.overview-box h2{font-family:'Noto Serif JP',serif;font-size:1.1rem;color:var(--green-dark);margin-bottom:12px;}
+.overview-box p{font-size:.84rem;color:var(--text);line-height:1.85;}
+.overview-box strong{color:var(--green-dark);}
+
+/* ===== 共通フロー ===== */
+.flow-section{
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:24px 26px;margin-bottom:32px;
+}
+.flow-section h2{font-family:'Noto Serif JP',serif;font-size:1.05rem;color:var(--green-dark);margin-bottom:18px;border-bottom:2px solid var(--bg);padding-bottom:10px;}
+.flow-steps{display:flex;gap:0;flex-wrap:wrap;}
+.flow-step{
+  flex:1;min-width:140px;
+  background:var(--bg);
+  border-radius:var(--radius-sm);
+  padding:14px 12px;
+  text-align:center;
+  position:relative;
+  margin:4px;
+}
+.flow-step:not(:last-child)::after{
+  content:'→';
+  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  color:var(--green-light);font-size:1.1rem;font-weight:bold;
+  z-index:1;
+}
+@media(max-width:560px){
+  .flow-step:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-16px;top:auto;transform:translateX(-50%);}
+  .flow-steps{flex-direction:column;}
+}
+.flow-num{
+  width:26px;height:26px;background:var(--green-mid);color:white;
+  border-radius:50%;font-size:.75rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 8px;
+}
+.flow-step-title{font-size:.8rem;font-weight:700;color:var(--green-dark);margin-bottom:4px;}
+.flow-step-desc{font-size:.72rem;color:var(--gray);line-height:1.5;}
+
+/* ===== ツールカード（マニュアル用） ===== */
+.tool-section{margin-bottom:36px;}
+.tool-manual-card{
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  border:1.5px solid #ddeedd;
+  overflow:hidden;
+}
+.tool-manual-header{
+  background:linear-gradient(135deg,var(--green-dark),var(--green-mid));
+  padding:16px 22px;
+  display:flex;align-items:center;gap:14px;
+}
+.tool-manual-header.coffee-hd{background:linear-gradient(135deg,#3e2009,#6f4e37);}
+.tool-manual-emoji{font-size:2rem;line-height:1;}
+.tool-manual-header-text{}
+.tool-manual-title{font-family:'Noto Serif JP',serif;font-size:1.1rem;font-weight:700;color:white;}
+.tool-manual-subtitle{font-size:.74rem;color:rgba(255,255,255,0.8);margin-top:2px;}
+
+.tool-manual-body{padding:20px 22px;}
+.tool-manual-desc{font-size:.83rem;color:var(--text);line-height:1.8;margin-bottom:16px;}
+
+.tool-manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:540px){.tool-manual-grid{grid-template-columns:1fr;}}
+
+.tool-manual-left{}
+.tool-manual-right{display:flex;flex-direction:column;align-items:center;gap:10px;}
+
+.info-table{width:100%;font-size:.78rem;border-collapse:collapse;}
+.info-table tr{border-bottom:1px solid #eef5ee;}
+.info-table tr:last-child{border-bottom:none;}
+.info-table th{
+  width:90px;padding:7px 8px;
+  text-align:left;font-weight:700;color:var(--green-mid);
+  vertical-align:top;
+}
+.info-table td{padding:7px 8px;color:var(--text);line-height:1.5;}
+.tag-list{display:flex;flex-wrap:wrap;gap:4px;}
+.tag{font-size:.67rem;background:#e8f5e0;color:var(--green-dark);padding:2px 8px;border-radius:12px;}
+.tag.coffee-tag{background:#f0e8d8;color:#4a2a0a;}
+
+/* QRコードエリア */
+.qr-area{text-align:center;}
+.qr-wrap{
+  width:90px;height:90px;
+  border:2px solid #ddeedd;border-radius:10px;
+  overflow:hidden;display:inline-block;
+  background:white;
+}
+.qr-wrap canvas,.qr-wrap img{width:90px!important;height:90px!important;display:block;}
+.qr-label{font-size:.7rem;color:var(--gray);margin-top:6px;text-align:center;line-height:1.4;}
+.url-text{font-size:.62rem;color:var(--green-mid);word-break:break-all;text-align:center;margin-top:4px;}
+
+.open-btn{
+  display:block;width:100%;
+  background:linear-gradient(135deg,var(--green-mid),var(--green-dark));
+  color:white;text-decoration:none;
+  text-align:center;padding:9px;
+  border-radius:8px;font-size:.8rem;font-weight:700;
+  margin-top:8px;
+}
+.open-btn.coffee-btn{background:linear-gradient(135deg,#6f4e37,#3e2009);}
+.open-btn:hover{opacity:.88;}
+
+/* ===== スクリーン解説 ===== */
+.screen-flow{margin-top:14px;padding-top:14px;border-top:1px dashed #ddeedd;}
+.screen-flow-title{font-size:.78rem;font-weight:700;color:var(--green-dark);margin-bottom:10px;}
+.screen-items{display:flex;gap:8px;flex-wrap:wrap;}
+.screen-item{
+  flex:1;min-width:110px;
+  background:var(--bg);border-radius:var(--radius-sm);
+  padding:10px 10px;position:relative;
+}
+.screen-item:not(:last-child)::after{
+  content:'→';
+  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  color:var(--green-light);font-size:.9rem;font-weight:bold;
+}
+@media(max-width:480px){
+  .screen-item:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-12px;top:auto;transform:translateX(-50%);}
+  .screen-items{flex-direction:column;}
+}
+.screen-num{font-size:.65rem;font-weight:700;color:var(--green-mid);margin-bottom:3px;}
+.screen-name{font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.screen-desc{font-size:.68rem;color:var(--gray);line-height:1.4;}
+
+/* ===== 注意事項 ===== */
+.notice-box{
+  background:#fffbee;border:1.5px solid var(--amber);
+  border-radius:var(--radius);padding:20px 22px;margin-bottom:28px;
+}
+.notice-box h3{font-size:.9rem;font-weight:700;color:var(--amber-dark);margin-bottom:12px;}
+.notice-box ul{padding-left:1.4em;font-size:.8rem;color:var(--text);line-height:2;}
+
+/* ===== キャリ爺メッセージ ===== */
+.keiji-box{
+  background:linear-gradient(135deg,#f2faf5,#eaf5ec);
+  border:1px solid #b8ddb8;border-radius:var(--radius);
+  padding:22px 26px;margin-bottom:28px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.keiji-avatar{font-size:2.2rem;flex-shrink:0;}
+.keiji-name{font-weight:700;color:var(--green-mid);font-size:.83rem;margin-bottom:6px;}
+.keiji-body p{font-size:.82rem;color:#2a4a2a;line-height:1.9;}
+
+/* ===== フッター ===== */
+.footer{text-align:center;padding:24px 16px;font-size:.73rem;color:var(--gray);line-height:1.9;border-top:1px solid #d0e4d0;margin-top:40px;}
+.footer strong{color:var(--green-mid);}
+
+/* ===== 印刷対応 ===== */
+@media print {
+  body{background:white;}
+  .page-header{background:#1a3a2a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .tool-manual-header{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .print-btn{display:none!important;}
+  .tool-manual-card{break-inside:avoid;page-break-inside:avoid;}
+  .open-btn{display:none!important;}
+  .footer{display:none;}
+  @page{margin:15mm;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>🌱 ES作成支援カードツール｜使い方マニュアル</h1>
+    <p>就活の木 × STAR+WHY+F&C メソッド｜カウンセラー・学生向け</p>
+    <div class="header-badges">
+      <span class="hbadge hbadge-a">APIキー不要</span>
+      <span class="hbadge hbadge-g">完全無料</span>
+      <span class="hbadge hbadge-g">6ツール独立</span>
+      <span class="hbadge hbadge-a">QRコードで即アクセス</span>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨️ このマニュアルを印刷する</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 概要 -->
+  <div class="overview-box">
+    <h2>📌 このツール群について</h2>
+    <p>
+      ES作成支援カードツールは、<strong>就活の木（キャリ爺/北山 四郎）</strong>が開発した、学生が自分の言葉でエントリーシートを書けるようになるための支援ツールです。<br>
+      6つのツールはそれぞれ<strong>完全独立</strong>しており、面談の中で「今日はガクチカだけ」と1つずつ使えます。<br>
+      カードを選んで入力するだけで、<strong>Claude.ai等のAIに貼り付けられるプロンプトが自動生成</strong>されます。AIが文章を「書く」のではなく、学生が自分の言葉で書いた内容をAIが「磨く」仕組みです。
+    </p>
+  </div>
+
+  <!-- 共通フロー -->
+  <div class="flow-section">
+    <h2>🔄 共通の使い方（全ツール共通）</h2>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-step-title">ツールを開く</div>
+        <div class="flow-step-desc">QRコードまたはURLからアクセス</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-step-title">カード選択</div>
+        <div class="flow-step-desc">テーマ・強み・タイプを選ぶ</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-step-title">自分の言葉で入力</div>
+        <div class="flow-step-desc">STAR+WHYをフォームに記入</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-step-title">プロンプト生成</div>
+        <div class="flow-step-desc">「生成する」ボタンを押す</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-step-title">Claude.aiで完成</div>
+        <div class="flow-step-desc">コピーしてAIに貼り付け</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注意事項 -->
+  <div class="notice-box">
+    <h3>⚠️ 学生への重要な伝え方</h3>
+    <ul>
+      <li><strong>「サンプル例文はそのままコピーしないで」</strong>——あくまで参考。自分の経験に書き換えることが大切です。</li>
+      <li><strong>「AIが書くのではなく、AIに磨いてもらう」</strong>——まず自分の言葉で書く。AIはその後です。</li>
+      <li><strong>「WHY欄が一番大事」</strong>——なぜその課題を放っておけなかったか、動機を正直に書くと採用担当者に刺さります。</li>
+      <li>Claude.aiは無料プランで使用可能。API不要です。</li>
+    </ul>
+  </div>
+
+  <!-- ===== 各ツール解説 ===== -->
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header">
+        <span class="tool-manual-emoji">🎯</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">ガクチカ作成ツール</div>
+          <div class="tool-manual-subtitle">学生時代に力を入れたこと｜es-gakuchika.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">アルバイト・ゼミ・サークル・留学など10テーマのカードから選び、STAR（状況・課題・行動・結果）＋WHY（なぜ動いたか）＋F&C（入社後の活かし方）を入力してプロンプトを生成します。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>テーマ数</th><td>10テーマ（アルバイト・ゼミ・サークル・留学など）</td></tr>
+              <tr><th>入力項目</th><td>S・T・WHY・A・R・F&C（6項目）</td></tr>
+              <tr><th>文字数</th><td>指定なし / 200 / 400 / 600 / 800文字</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag">STAR+WHY+F&C</span><span class="tag">等身大重視</span><span class="tag">サンプル例文付き</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">テーマ選択</div>
+                  <div class="screen-desc">10テーマカードから経験に近いものを選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">フォーム入力</div>
+                  <div class="screen-desc">STAR+WHYを自分の言葉で記入</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-gakuchika"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-gakuchika.html</div>
+            </div>
+            <a href="es-gakuchika.html" class="open-btn">🎯 ガクチカツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header">
+        <span class="tool-manual-emoji">💪</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">自己PR作成ツール</div>
+          <div class="tool-manual-subtitle">強みをエピソードで証明する｜es-jiko-pr.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">主体性・実行力・傾聴力など12の強みカードから選択。「どの活動でその強みを発揮したか」を明記することで、再現性のある自己PRを構成します。「私の強みは〇〇で培った〇〇です」という書き出しで一貫性を担保。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>強みカード</th><td>12種類（前に踏み出す力・考え抜く力・チームで働く力）</td></tr>
+              <tr><th>入力項目</th><td>活動名・S・T・WHY・A・R・活用法（7項目）</td></tr>
+              <tr><th>文字数</th><td>200 / 400 / 600文字</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag">活動連携</span><span class="tag">再現性重視</span><span class="tag">12強み</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">強み選択</div>
+                  <div class="screen-desc">12の強みカードから最も自信のあるものを選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">エピソード入力</div>
+                  <div class="screen-desc">活動名とSTAR+WHYを入力</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-pr"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-jiko-pr.html</div>
+            </div>
+            <a href="es-jiko-pr.html" class="open-btn">💪 自己PRツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header">
+        <span class="tool-manual-emoji">🧭</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">志望動機作成ツール</div>
+          <div class="tool-manual-subtitle">なぜ他社ではなくこの会社なのか｜es-shibo.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">「事業共感型」「人・文化共鳴型」「インターン型」など9タイプの志望動機の出発点から選択。きっかけ・価値観・企業の魅力・貢献の4要素を入力し、差別化された志望動機を構成します。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>タイプ数</th><td>9タイプ（A〜I）</td></tr>
+              <tr><th>入力項目</th><td>きっかけ・WHY・価値観・企業の魅力・貢献（5項目）</td></tr>
+              <tr><th>文字数</th><td>200 / 400 / 600 / 800文字</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag">差別化重視</span><span class="tag">禁止ワード指摘</span><span class="tag">4要素論理接続</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">タイプ選択</div>
+                  <div class="screen-desc">志望動機の出発点に近いタイプを9種から選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">4要素入力</div>
+                  <div class="screen-desc">きっかけ〜貢献を入力。企業名は必須。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-shibo"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-shibo.html</div>
+            </div>
+            <a href="es-shibo.html" class="open-btn">🧭 志望動機ツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header">
+        <span class="tool-manual-emoji">⚓</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">就活の軸作成ツール</div>
+          <div class="tool-manual-subtitle">価値観を言語化する｜es-jiku.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">「成長・挑戦軸」「社会貢献軸」「WLB軸」など12の軸カードから選択。「なぜその軸なのか」という原体験と結びつけることで、面接でブレずに語れる就活の軸を作ります。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>軸カード</th><td>12軸（成長・社会貢献・人と関わる・WLBなど）</td></tr>
+              <tr><th>入力項目</th><td>軸の内容・原体験（2項目）</td></tr>
+              <tr><th>文字数</th><td>200 / 300 / 400文字</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag">WHY重視</span><span class="tag">原体験連携</span><span class="tag">シャイン理論参照</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">軸選択</div>
+                  <div class="screen-desc">12の軸カードから最も近いものを選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">WHY入力</div>
+                  <div class="screen-desc">軸の内容と原体験（なぜその軸か）を入力</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-jiku"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-jiku.html</div>
+            </div>
+            <a href="es-jiku.html" class="open-btn">⚓ 就活の軸ツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header">
+        <span class="tool-manual-emoji">📋</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">ES頻出質問対策ツール</div>
+          <div class="tool-manual-subtitle">挫折・困難克服・他人を巻き込んだ経験｜es-esq.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">「ガクチカ」とは別に問われる頻出設問の3タイプ（挫折・困難克服・他人を巻き込んだ経験）×各4テーマに対応。3画面で徐々に絞り込む設計。採用担当者が「本質」を見るための設問専用ツールです。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>タイプ</th><td>3タイプ×4テーマ＝計12テーマ</td></tr>
+              <tr><th>入力項目</th><td>S・T・WHY・A・R・FC（6項目）</td></tr>
+              <tr><th>文字数</th><td>200 / 400 / 600文字</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag">3画面遷移</span><span class="tag">タイプ別プロンプト</span><span class="tag">WHY必須</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移（3画面）</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">タイプ選択</div>
+                  <div class="screen-desc">挫折・困難・巻き込みの3種から選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">テーマ選択</div>
+                  <div class="screen-desc">4テーマから経験に近いカードを選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 3</div>
+                  <div class="screen-name">STAR入力</div>
+                  <div class="screen-desc">S・T・WHY・A・R・FCを入力</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-esq"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-esq.html</div>
+            </div>
+            <a href="es-esq.html" class="open-btn">📋 頻出質問ツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tool-section">
+    <div class="tool-manual-card">
+      <div class="tool-manual-header coffee-hd">
+        <span class="tool-manual-emoji">☕</span>
+        <div class="tool-manual-header-text">
+          <div class="tool-manual-title">コーヒーブレイク作成ツール</div>
+          <div class="tool-manual-subtitle">趣味・特技・資格の一言説明｜es-coffee.html</div>
+        </div>
+      </div>
+      <div class="tool-manual-body">
+        <p class="tool-manual-desc">面接のアイスブレイクに使える「人柄」「こだわり」が伝わる短文を作成するツール。スポーツ・音楽・読書・資格など9テーマ。スキルや実績より「人柄・ユニークな視点」を引き出すよう設計されています。</p>
+        <div class="tool-manual-grid">
+          <div class="tool-manual-left">
+            <table class="info-table">
+              <tr><th>テーマ</th><td>9テーマ（趣味6種＋特技・資格3種）</td></tr>
+              <tr><th>入力項目</th><td>内容・WHY（なぜ続ける）・こだわり・人柄（4項目）</td></tr>
+              <tr><th>文字数</th><td>50文字 / 100文字 / 150文字 / A4・1行</td></tr>
+              <tr><th>特徴</th><td class="tag-list"><span class="tag coffee-tag">人柄重視</span><span class="tag coffee-tag">WHY欄あり</span><span class="tag coffee-tag">コピーライター視点</span></td></tr>
+            </table>
+            <div class="screen-flow">
+              <div class="screen-flow-title">📱 画面遷移</div>
+              <div class="screen-items">
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 1</div>
+                  <div class="screen-name">テーマ選択</div>
+                  <div class="screen-desc">9テーマから最も話せるものを選択</div>
+                </div>
+                <div class="screen-item">
+                  <div class="screen-num">SCREEN 2</div>
+                  <div class="screen-name">人柄入力</div>
+                  <div class="screen-desc">内容・なぜ続けるか・こだわりを入力</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-manual-right">
+            <div class="qr-area">
+              <div class="qr-wrap" id="qr-m-coffee"></div>
+              <div class="qr-label">スマホで読み取ってすぐ使える</div>
+              <div class="url-text">https://tanukin0423.github.io/shukatsu-es/es-coffee.html</div>
+            </div>
+            <a href="es-coffee.html" class="open-btn coffee-btn">☕ コーヒーブレイクツールを開く</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- キャリ爺メッセージ -->
+  <div class="keiji-box">
+    <div class="keiji-avatar">🌱</div>
+    <div>
+      <div class="keiji-name">キャリ爺から学生のみなさんへ（北山 四郎 / 多摩大学キャリア支援）</div>
+      <p>
+        このツールは「答えを出すAI」ではありません。<strong>あなたの中にある言葉を引き出すための「問いかけの道具」</strong>です。<br>
+        カードを選んで、まず自分の言葉で書いてみてください。サンプルはあくまで参考です。<br>
+        AIが磨くのは、あなたが書いた言葉だけです。<strong>採用担当者は、あなたの「本物の言葉」を待っています。</strong>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>🌱 就活の木</strong>｜ES作成支援カードツール 使い方マニュアル<br>
+  キャリアコンサルタント技能士2級 北山 四郎（多摩大学キャリア支援課）<br>
+  <a href="index.html" style="color:var(--green-mid);">← ランチャーページに戻る</a>
+</div>
+
+<script>
+const BASE_URL = 'https://tanukin0423.github.io/shukatsu-es/';
+
+const tools = [
+  { id: 'qr-m-gakuchika', file: 'es-gakuchika.html' },
+  { id: 'qr-m-pr',        file: 'es-jiko-pr.html'   },
+  { id: 'qr-m-shibo',     file: 'es-shibo.html'      },
+  { id: 'qr-m-jiku',      file: 'es-jiku.html'       },
+  { id: 'qr-m-esq',       file: 'es-esq.html'        },
+  { id: 'qr-m-coffee',    file: 'es-coffee.html'     }
+];
+
+window.addEventListener('load', () => {
+  tools.forEach(t => {
+    const el = document.getElementById(t.id);
+    if (!el) return;
+    try {
+      new QRCode(el, {
+        text: BASE_URL + t.file,
+        width: 90,
+        height: 90,
+        colorDark: '#1a3a2a',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e) {
+      el.style.background = '#eee';
+    }
+  });
+});
+</script>
+</body>
+</html>

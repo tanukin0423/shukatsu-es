@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>就活の軸作成支援｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;--amber:#e9c46a;--amber-dark:#c9a227;--amber-light:#f4d58d;--bg:#f2f7f4;--gray:#6b7c6b;--text:#1a2a1a;--shadow:0 4px 24px rgba(0,0,0,0.09);--radius:16px;--radius-sm:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hero{background:linear-gradient(160deg,var(--green-deepest) 0%,var(--green-dark) 40%,var(--green-mid) 100%);padding:28px 24px 36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%2352b788' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.hero-brand{display:flex;align-items:center;gap:14px;}
+.hero-tree{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:900;color:white;letter-spacing:.08em;}
+.hero-subtitle{font-size:.72rem;color:var(--green-pale);margin-top:4px;}
+.hero-badge{background:rgba(233,196,106,0.2);border:1px solid var(--amber);color:var(--amber-light);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.hero-section-tag{display:inline-block;background:rgba(82,183,136,0.25);border:1px solid var(--green-light);color:var(--green-pale);font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.hero-desc{font-size:.85rem;color:rgba(255,255,255,0.85);line-height:1.7;}
+.hero-desc strong{color:var(--amber-light);}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 60px;}
+.card-grid-3{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:6px;}
+@media(min-width:560px){.card-grid-3{grid-template-columns:repeat(3,1fr);gap:14px;}}
+.cat-label{font-size:.76rem;font-weight:700;color:var(--green-mid);background:#e8f5e0;border-radius:20px;padding:3px 12px;display:inline-block;margin:14px 0 10px;}
+.th-card{background:white;border-radius:var(--radius-sm);padding:18px 12px 16px;text-align:center;cursor:pointer;transition:all .22s ease;box-shadow:0 2px 10px rgba(0,0,0,.06);border:2px solid #e4ede4;position:relative;}
+.th-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--green-light);}
+.th-card.selected{border-color:var(--green-mid);background:#f0faf3;}
+.th-card.selected::after{content:'✓';position:absolute;top:7px;right:9px;color:var(--green-mid);font-weight:700;font-size:.82rem;}
+.th-emoji{font-size:2.2rem;display:block;margin-bottom:7px;line-height:1;}
+.th-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.4;}
+.th-sub{font-size:.7rem;color:var(--gray);margin-top:3px;line-height:1.3;}
+.sec-title{margin-bottom:20px;}
+.sec-title h2{font-family:'Noto Serif JP',serif;font-size:1.25rem;color:var(--green-dark);margin-bottom:4px;}
+.sec-title p{font-size:.83rem;color:var(--gray);line-height:1.6;}
+.sec-badge{display:inline-block;background:var(--green-pale);color:var(--green-dark);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.form-wrap{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px 30px;margin-top:6px;}
+.form-selected-badge{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#f0faf3;border:2px solid var(--green-mid);border-radius:var(--radius-sm);margin-bottom:22px;}
+.form-sel-emoji{font-size:1.8rem;}
+.form-sel-name{font-size:1rem;font-weight:700;color:var(--green-dark);}
+.form-sel-sub{font-size:.75rem;color:var(--gray);margin-top:2px;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-weight:bold;margin-bottom:7px;color:#2c3e50;font-size:.9rem;}
+.form-group textarea{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;min-height:88px;resize:vertical;line-height:1.65;}
+.form-group textarea:focus{outline:none;border-color:var(--green-light);box-shadow:0 0 0 3px rgba(82,183,136,.1);}
+.char-counter{display:block;text-align:right;font-size:.8em;color:#999;margin-top:4px;}
+.example-box{background:#f4f8ff;border:1px dashed #b0c4de;border-radius:6px;padding:9px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;}
+.example-text{flex:1;margin:0;font-size:.85em;color:#444;line-height:1.55;}
+.btn-copy-ex{flex-shrink:0;background:white;border:1px solid #007bff;color:#007bff;border-radius:5px;padding:4px 8px;font-size:.78em;font-weight:bold;cursor:pointer;white-space:nowrap;}
+.btn-copy-ex:hover{background:#f0f8ff;}
+.target-inputs{display:grid;grid-template-columns:1fr;gap:9px;margin-bottom:14px;}
+@media(min-width:540px){.target-inputs{grid-template-columns:repeat(3,1fr);}}
+.form-control{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;font-size:.86rem;font-family:'Noto Sans JP',sans-serif;background:white;-webkit-appearance:none;appearance:none;}
+select.form-control{background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22%3E%3Cpath fill%3D%22%232d6a4f%22 d%3D%22M6 8L1 3h10z%22%2F%3E%3C%2Fsvg%3E');background-repeat:no-repeat;background-position:right 9px center;padding-right:26px;cursor:pointer;}
+.btn-generate{display:block;width:100%;padding:13px;background:linear-gradient(135deg,var(--green-mid),var(--green-dark));color:white;border:none;border-radius:8px;font-size:.98rem;font-weight:bold;cursor:pointer;font-family:'Noto Sans JP',sans-serif;letter-spacing:.05em;box-shadow:0 4px 15px rgba(45,106,79,.35);transition:all .2s;margin-top:4px;}
+.btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,106,79,.4);}
+.result-area{margin-top:22px;padding-top:22px;border-top:2px solid #e8f0e8;}
+.prompt-block{margin-bottom:18px;}
+.prompt-block h4{font-size:.9rem;font-weight:700;color:var(--green-dark);border-left:4px solid var(--green-mid);padding-left:9px;margin-bottom:7px;}
+.prompt-block p{font-size:.8rem;color:var(--gray);margin-bottom:7px;}
+.prompt-textarea{width:100%;min-height:140px;background:#f8f8f8;border:1px solid #ddd;border-radius:7px;padding:9px;font-family:'Courier New',monospace;font-size:.76rem;line-height:1.6;resize:vertical;color:#333;}
+.btn-copy-prompt{float:right;margin-top:6px;background:#28a745;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-copy-prompt:hover{background:#218838;}
+.clearfix::after{content:'';display:table;clear:both;}
+.nav-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn-back{background:#6c757d;color:white;border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-back:hover{background:#5a6268;}
+.btn-claude{background:var(--amber);color:var(--green-dark);border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;}
+.btn-claude:hover{background:var(--amber-dark);color:white;}
+.keiji-card{background:linear-gradient(135deg,#f0faf3,#e8f5e0);border:1px solid #b8ddb8;border-radius:var(--radius-sm);padding:18px 20px;margin-top:22px;font-size:.82rem;line-height:1.8;color:#2a4a2a;}
+.keiji-name{font-weight:700;color:var(--green-mid);font-size:.83rem;margin-bottom:5px;}
+.keiji-question{background:#f0faf3;border-left:4px solid var(--green-light);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px;font-size:.82rem;color:#2a4a2a;line-height:1.7;}
+.keiji-question .keiji-q-label{font-weight:700;color:var(--green-mid);font-size:.78rem;display:block;margin-bottom:5px;}
+.keiji-question ul{margin:0;padding-left:1.2em;}
+.keiji-question ul li{margin-bottom:2px;}
+.why-required-badge{display:inline-block;background:#c9a227;color:white;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.why-hint{background:#fffbee;border-left:4px solid var(--amber);padding:9px 13px;font-size:.8em;color:#7a5c00;line-height:1.75;margin-bottom:8px;border-radius:0 6px 6px 0;}
+.form-group.why-group{background:#fffdf4;border:1px solid #e9c46a;border-radius:8px;padding:12px 14px 8px;margin-bottom:20px;}
+.self-first-hint{font-size:.75rem;color:var(--gray);text-align:center;margin-bottom:6px;font-style:italic;}
+.example-box-later{margin-top:8px;}
+.error-msg{color:#c0392b;font-weight:bold;text-align:center;padding:10px;font-size:.88rem;}
+.hidden{display:none!important;}
+.footer{text-align:center;padding:24px 16px;font-size:.75rem;color:var(--gray);line-height:1.8;border-top:1px solid #d8e8d8;margin-top:40px;}
+.footer strong{color:var(--green-mid);}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-brand">
+        <span class="hero-tree">🌱</span>
+        <div><div class="hero-title">就活の木｜ES作成支援</div><div class="hero-subtitle">WHY＋原体験メソッド</div></div>
+      </div>
+      <div class="hero-badge">APIキー不要</div>
+    </div>
+    <div class="hero-section-tag">⚓ 就活の軸</div>
+    <p class="hero-desc"><strong>「就活の軸」は、あなたの価値観そのものです。</strong><br>
+    軸のカードを選んで、「なぜその軸なのか」という原体験を入力するだけで、面接官が「本物の言葉だ」と感じるプロンプトが生成されます。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div id="jk-screen1">
+    <div class="sec-title">
+      <span class="sec-badge">⚓ 就活の軸</span>
+      <h2>就活の「軸」を選んでください</h2>
+      <p>仕事を選ぶ上で最も大切にしていることに近いカードをクリックしてください。</p>
+    </div>
+    <div class="cat-label" style="margin-top:4px;">🚀 成長・自分の可能性</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="jkSelect('seichou',this)"><span class="th-emoji">📈</span><div class="th-name">成長・挑戦軸</div><div class="th-sub">若いうちから裁量を持って挑戦したい</div></div>
+      <div class="th-card" onclick="jkSelect('sairyo',this)"><span class="th-emoji">🎯</span><div class="th-name">自分で動く軸</div><div class="th-sub">自分で考え、自分で決めて動きたい</div></div>
+      <div class="th-card" onclick="jkSelect('shakai_kouken',this)"><span class="th-emoji">🌱</span><div class="th-name">社会貢献軸</div><div class="th-sub">社会の役に立つ仕事がしたい</div></div>
+    </div>
+    <div class="cat-label">🌍 人・チーム・環境</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="jkSelect('hito',this)"><span class="th-emoji">💬</span><div class="th-name">人と関わる軸</div><div class="th-sub">人の変化・成長を間近で感じたい</div></div>
+      <div class="th-card" onclick="jkSelect('team_work',this)"><span class="th-emoji">🤝</span><div class="th-name">チームワーク軸</div><div class="th-sub">チームで高め合える環境で働きたい</div></div>
+      <div class="th-card" onclick="jkSelect('shokuba_bunka',this)"><span class="th-emoji">🏠</span><div class="th-name">職場風土軸</div><div class="th-sub">風通しよく意見が言える職場で</div></div>
+    </div>
+    <div class="cat-label">🔧 働き方・ものづくり</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="jkSelect('antei',this)"><span class="th-emoji">⚓</span><div class="th-name">安定・長期軸</div><div class="th-sub">腰を据えて長く働き続けたい</div></div>
+      <div class="th-card" onclick="jkSelect('monozukuri',this)"><span class="th-emoji">🔧</span><div class="th-name">ものづくり軸</div><div class="th-sub">形として世に出るものを作りたい</div></div>
+      <div class="th-card" onclick="jkSelect('wlb',this)"><span class="th-emoji">⚖️</span><div class="th-name">WLB軸</div><div class="th-sub">仕事もプライベートも大切にしたい</div></div>
+    </div>
+    <div class="cat-label">💡 自分の強み・Can軸</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="jkSelect('tsuyomi',this)"><span class="th-emoji">💡</span><div class="th-name">強み活かし軸</div><div class="th-sub">自分の得意・持ち味を発揮したい</div></div>
+      <div class="th-card" onclick="jkSelect('senmon',this)"><span class="th-emoji">🔬</span><div class="th-name">専門性・スキル軸</div><div class="th-sub">一つの分野を深く極めていきたい</div></div>
+      <div class="th-card" onclick="jkSelect('chishiki',this)"><span class="th-emoji">🎓</span><div class="th-name">経験・知識活用軸</div><div class="th-sub">学んだことを仕事で直接活かしたい</div></div>
+    </div>
+    <div class="keiji-card"><div class="keiji-name">🌱 キャリ爺より</div>「就活の軸」はあなたの価値観そのものです。なぜその軸なのか、過去の原体験と結びつけましょう。「給与が良いから」「安定しているから」は軸ではありません。</div>
+  </div>
+
+  <div id="jk-screen2" class="hidden">
+    <div class="form-wrap">
+      <div class="form-selected-badge"><span class="form-sel-emoji" id="jk-form-emoji"></span><div><div class="form-sel-name" id="jk-form-name"></div><div class="form-sel-sub">軸と原体験を入力してください</div></div></div>
+
+      <div class="form-group">
+        <label>【STEP 1】就活の軸（どんな仕事・環境を求めているか）</label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：「何のために働くか」を考えてみて</span><ul><li>「給与が高い」「安定している」は軸じゃないよ。</li><li>「こんな仕事がしたい」「こんな環境で働きたい」を「〇〇できる仕事」という形で。</li></ul></div>
+        <textarea id="jk-inp-axis" data-counter="jk-cnt-axis" oninput="updateCnt(this)" placeholder="あなたが仕事を選ぶ上で、一番大切にしたいことは何ですか？（「〇〇できる仕事・環境」という形で書いてみよう）"></textarea>
+        <span id="jk-cnt-axis" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="jk-ex-axis"></p><button class="btn-copy-ex" onclick="copyEx('jk-ex-axis','jk-inp-axis')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group why-group">
+        <label>【STEP 2】なぜその軸なのか（原体験・経験）<span class="why-required-badge">ここが核心</span></label>
+        <div class="keiji-question"><span class="keiji-q-label">🌱 キャリ爺から：なぜその軸なの？</span><ul><li>アルバイト・ゼミ・部活で「こう感じた」経験がある？</li><li>うまくいかなかった経験・悔しかった経験から生まれた軸かも。</li><li>「〜という経験から、〜を大切にしたいと思った」という形で書くとGood。</li></ul></div>
+        <textarea id="jk-inp-reason" data-counter="jk-cnt-reason" oninput="updateCnt(this)" placeholder="なぜ、その軸が大切なのですか？（アルバイト・ゼミ・部活などの具体的な経験と結びつけて教えてください）"></textarea>
+        <span id="jk-cnt-reason" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="jk-ex-reason"></p><button class="btn-copy-ex" onclick="copyEx('jk-ex-reason','jk-inp-reason')">参考にコピー</button></div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #e8f0e8;margin:20px 0;">
+      <div class="target-inputs">
+        <select id="jk-industry" class="form-control"><option value="">業界（任意）</option></select>
+        <input type="text" id="jk-company" class="form-control" placeholder="企業名（任意）">
+        <select id="jk-job" class="form-control"><option value="">職種（任意）</option></select>
+      </div>
+      <div class="form-group"><select id="jk-length" class="form-control"><option value="200">200文字</option><option value="300" selected>300文字</option><option value="400">400文字</option></select></div>
+      <button class="btn-generate" onclick="jkGenerate()">🤖 AI添削プロンプトを生成する</button>
+      <div id="jk-error" class="error-msg hidden"></div>
+      <div id="jk-result" class="result-area hidden"></div>
+    </div>
+    <div class="nav-row"><button class="btn-back" onclick="jkGoScreen(1)">← 軸選択に戻る</button><a href="https://claude.ai/new" target="_blank" class="btn-claude">🤖 Claude.aiを開く</a></div>
+  </div>
+</div>
+<div class="footer">
+  <strong>🌱 就活の木</strong>｜就活の軸作成支援ツール<br>
+  「仕事を通して必要とされる生き方を、自分の手で作り上げていくこと」——それが、就職の本質です。<br>
+  <span style="margin-top:6px;display:block;color:#a0b0a0;">君は、一人じゃない。いつでも、目の前のキャリア支援課の扉は開いているよ。——キャリ爺</span>
+</div>
+<script>
+const INDUSTRIES=['IT・ソフトウェア・通信','メーカー（製造）','商社','小売・外食','金融（銀行・証券・保険）','マスコミ（広告・出版・放送）','サービス・コンサル','インフラ（運輸・電力・ガス）','官公庁・団体','その他'];
+const JOBS=['営業','企画・マーケティング','事務・アシスタント（一般職）','エンジニア・技術職（IT・WEB）','技術職（メーカー）','販売・サービス','専門職（コンサル・金融など）','クリエイティブ（デザイン・制作）','その他'];
+const JIKU_DATA={
+  seichou:{emoji:'📈',name:'成長・挑戦軸',axis:'例：若いうちから裁量権を持って挑戦でき、早期に成長できる環境。',reason:'例：アルバイトで自ら提案した改善策を実行させてもらい、大きなやりがいとスキルアップを感じた経験から、成長機会を最も大切にしたいと考えるようになりました。'},
+  sairyo:{emoji:'🎯',name:'自分で動く軸',axis:'例：若手のうちから自分で考え、自分で決め、自分の裁量で動ける仕事環境。',reason:'例：大学のプロジェクトで、指示通りに動くより自分で課題を設定して取り組んだ経験のほうが圧倒的に成長を感じられました。'},
+  shakai_kouken:{emoji:'🌱',name:'社会貢献軸',axis:'例：社会の課題解決に直結し、人々の生活に大きな影響を与えられる事業。',reason:'例：ボランティア経験を通じ、自分の行動が誰かの役に立つことに使命感を抱き、ビジネスを通じて社会貢献性の高い仕事をしたいと考えるようになりました。'},
+  hito:{emoji:'💬',name:'人と関わる軸',axis:'例：人と直接関わり、相手の変化や成長を間近で感じられる仕事。',reason:'例：学習支援ボランティアで、苦手だった子供が「できた！」と言った瞬間の表情が忘れられません。人の変化に立ち会えることに最もやりがいを感じると気づいたためです。'},
+  team_work:{emoji:'🤝',name:'チームワーク軸',axis:'例：多様なメンバーと協働し、お互いに高め合えるチームワークを重視する組織文化。',reason:'例：サークルでチームの意見が対立した際、調整役としてメンバーをまとめた経験から、個の力よりもチームでの成果に大きな価値を感じるためです。'},
+  shokuba_bunka:{emoji:'🏠',name:'職場風土軸',axis:'例：風通しが良く、若手でも自分の意見が上層部に届くフラットな職場環境。',reason:'例：大学のゼミで、年功序列ではなく意見の質で議論が進む環境に身を置いた時、最も創造的で充実した研究ができたため、これを軸としました。'},
+  antei:{emoji:'⚓',name:'安定・長期軸',axis:'例：長期的に安心して働き続けられる安定した経営基盤と、継続的にスキルを積み上げられる環境。',reason:'例：アルバイトで短期雇用の不安定さを経験し、「腰を据えて仕事を深める」ことができる環境でこそ、本当の成長ができると実感したためです。'},
+  monozukuri:{emoji:'🔧',name:'ものづくり軸',axis:'例：自分が関わったものが形として世に出て、社会や生活を支えるものづくりの仕事。',reason:'例：大学の実験で設計した装置が実際に動いた瞬間の達成感が、今でも原体験として残っています。「目に見えるものを作る」という行為に人一倍のこだわりと喜びを感じるためです。'},
+  wlb:{emoji:'⚖️',name:'WLB軸',axis:'例：仕事に全力で取り組みながら、プライベートの時間も確保できるメリハリのある働き方。',reason:'例：体調を崩してすべてが止まった経験から、「健康と生活の土台があってこそ、仕事で成果が出せる」と実感しました。持続可能な働き方が不可欠だと考えています。'},
+  tsuyomi:{emoji:'💡',name:'強み活かし軸',axis:'例：自分の得意なことや持ち味を最大限に発揮できる仕事・職場環境。',reason:'例：サークルで「自分が得意な分析役」に徹したとき、チームへの貢献度が一番高かった経験から。得意なことを活かせる環境こそ、長く本気で働き続けられる場所だと気づきました。'},
+  senmon:{emoji:'🔬',name:'専門性・スキル軸',axis:'例：特定の分野を深く極め、その専門性を武器として社会や組織に貢献できる仕事。',reason:'例：ゼミで同じテーマを2年間追い続けた結果、教授から「その視点は君にしかない」と言われた経験が原体験です。専門性が「自分だけの武器」になる瞬間を、仕事でも体験し続けたいと思いました。'},
+  chishiki:{emoji:'🎓',name:'経験・知識活用軸',axis:'例：大学で培った知識・経験を実社会で直接役立て、学びを「生きた力」として発揮できる仕事。',reason:'例：ゼミの研究成果を地域の団体に提案する機会があり、「自分の学びが現実を動かした」という実感が忘れられません。その体験から「知識は使ってこそ価値がある」という信念が生まれました。'}
+};
+let jkCurrentData=null;
+function jkGoScreen(n){[1,2].forEach(i=>{const el=document.getElementById('jk-screen'+i);if(el)el.classList.add('hidden');});const t=document.getElementById('jk-screen'+n);if(t)t.classList.remove('hidden');window.scrollTo(0,0);}
+function jkSelect(key,el){
+  jkCurrentData=JIKU_DATA[key];
+  document.querySelectorAll('.th-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');
+  document.getElementById('jk-form-emoji').textContent=jkCurrentData.emoji;
+  document.getElementById('jk-form-name').textContent=jkCurrentData.name;
+  setTxt('jk-ex-axis',jkCurrentData.axis);setTxt('jk-ex-reason',jkCurrentData.reason);
+  resetFields(['jk-inp-axis','jk-inp-reason']);
+  document.getElementById('jk-result').classList.add('hidden');document.getElementById('jk-result').innerHTML='';
+  hideErr('jk-error');jkGoScreen(2);
+}
+function jkGenerate(){
+  const axis=g('jk-inp-axis'),reason=g('jk-inp-reason');
+  if(!axis||!reason){showErr('jk-error','軸と理由の2項目を入力してください。');return;}
+  hideErr('jk-error');
+  const co=g('jk-company')||'指定なし',ind=g('jk-industry')||'指定なし',job=g('jk-job')||'指定なし',len=g('jk-length');
+  const step1=`# 命令\nあなたは大手企業の採用責任者です。\n以下の【就活の軸ドラフト】を元に、${co}（${ind}業界・${job}）の採用担当者が「自社の社風に合致する」と評価するベース文章を作成してください。\n\n【最重要指示】\n・「やりがいを感じる」「成長できる」などの抽象語を、具体的な経験・場面に置き換える\n・なぜその軸なのか、過去の原体験・経験が必ず伝わるよう組み込む\n・軸が${co}でどのように満たされるか、企業の具体的な特徴と接続する\n\n# 入力された就活の軸ドラフト（軸：${jkCurrentData.name}）\n・就活の軸: ${axis}\n・軸の理由（原体験）: ${reason}\n\n# 出力フォーマット（厳守）\n## 1. 就活の軸・ベース文章\n## 2. 評価ポイント解説`;
+  const step2=`ありがとうございます。\n「1. 就活の軸・ベース文章」を、**厳密に${len}文字以内**（±10%許容）に調整してください。\n・軸の理由となる「原体験」は削りすぎないでください\n・文末は「〜です・〜ます」調で統一\n・最後に文字数カウントを記載（例：【295文字】）`;
+  showResult('jk-result',step1,step2);
+}
+function initSelects(){
+  ['jk-industry'].forEach(id=>{const s=document.getElementById(id);if(!s)return;INDUSTRIES.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});});
+  ['jk-job'].forEach(id=>{const s=document.getElementById(id);if(!s)return;JOBS.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});});
+}
+function g(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function setTxt(id,val){const e=document.getElementById(id);if(e)e.textContent=val||'';}
+function resetFields(ids){ids.forEach(id=>{const e=document.getElementById(id);if(e){e.value='';const c=document.getElementById(e.dataset.counter);if(c)c.textContent='0 文字';}});}
+function updateCnt(ta){const c=document.getElementById(ta.dataset.counter);if(c)c.textContent=ta.value.length+' 文字';}
+function copyEx(exId,taId){const ex=document.getElementById(exId),ta=document.getElementById(taId);if(!ex||!ta)return;ta.value=ex.textContent;updateCnt(ta);ta.focus();}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.remove('hidden');}}
+function hideErr(id){const e=document.getElementById(id);if(e)e.classList.add('hidden');}
+function copyPrompt(id,btn){const ta=document.getElementById(id);if(!ta)return;ta.select();try{document.execCommand('copy');btn.textContent='コピー完了！';setTimeout(()=>btn.textContent='コピー',2000);}catch(e){}}
+function showResult(resultId,p1,p2){const el=document.getElementById(resultId);el.innerHTML=`<div class="prompt-block"><h4>📋 STEP 1｜Claude.aiに貼り付けるプロンプト</h4><p>以下をそのままClaude.aiにコピー&ペーストしてください。</p><textarea class="prompt-textarea" id="${resultId}-p1" readonly>${p1}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p1',this)">コピー</button></div></div><div class="prompt-block"><h4>📋 STEP 2｜AI回答後に続けて貼り付けるプロンプト</h4><p>STEP1の回答を受け取ったら、続けて以下を貼り付けてください。</p><textarea class="prompt-textarea" id="${resultId}-p2" readonly>${p2}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p2',this)">コピー</button></div></div>`;el.classList.remove('hidden');el.scrollIntoView({behavior:'smooth',block:'start'});}
+window.onload=()=>initSelects();
+</script>
+</body>
+</html>

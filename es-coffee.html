@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コーヒーブレイク｜就活の木</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deepest:#0d2318;--green-dark:#1a3a2a;--green-mid:#2d6a4f;--green-light:#52b788;--green-pale:#b7e4c7;
+  --amber:#e9c46a;--amber-dark:#c9a227;--amber-light:#f4d58d;
+  --brown-deepest:#3e2009;--brown-mid:#6f4e37;--brown-light:#c69c6d;--brown-pale:#f0e8d8;
+  --bg:#f7f4f0;--gray:#6b7c6b;--text:#1a2a1a;
+  --shadow:0 4px 24px rgba(0,0,0,0.09);--radius:16px;--radius-sm:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hero{background:linear-gradient(160deg,#2c1a0e 0%,#4a2c12 40%,var(--brown-mid) 100%);padding:28px 24px 36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c69c6d' fill-opacity='0.08'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.hero-brand{display:flex;align-items:center;gap:14px;}
+.hero-tree{font-size:2.6rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:900;color:white;letter-spacing:.08em;}
+.hero-subtitle{font-size:.72rem;color:#e8d5be;margin-top:4px;}
+.hero-badge{background:rgba(198,156,109,0.25);border:1px solid var(--brown-light);color:#f0e0c8;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+.hero-section-tag{display:inline-block;background:rgba(198,156,109,0.25);border:1px solid var(--brown-light);color:#f0e0c8;font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px;}
+.hero-desc{font-size:.85rem;color:rgba(255,255,255,0.85);line-height:1.7;}
+.hero-desc strong{color:var(--amber-light);}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 60px;}
+.card-grid-3{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:6px;}
+@media(min-width:560px){.card-grid-3{grid-template-columns:repeat(3,1fr);gap:14px;}}
+.cat-label{font-size:.76rem;font-weight:700;color:var(--brown-mid);background:var(--brown-pale);border-radius:20px;padding:3px 12px;display:inline-block;margin:14px 0 10px;}
+.th-card{background:white;border-radius:var(--radius-sm);padding:18px 12px 16px;text-align:center;cursor:pointer;transition:all .22s ease;box-shadow:0 2px 10px rgba(0,0,0,.06);border:2px solid #e8ddd0;position:relative;}
+.th-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);border-color:var(--brown-light);}
+.th-card.selected{border-color:var(--brown-mid);background:#fdf6ee;}
+.th-card.selected::after{content:'✓';position:absolute;top:7px;right:9px;color:var(--brown-mid);font-weight:700;font-size:.82rem;}
+.th-emoji{font-size:2.2rem;display:block;margin-bottom:7px;line-height:1;}
+.th-name{font-size:.82rem;font-weight:700;color:var(--text);line-height:1.4;}
+.th-sub{font-size:.7rem;color:var(--gray);margin-top:3px;line-height:1.3;}
+.sec-title{margin-bottom:20px;}
+.sec-title h2{font-family:'Noto Serif JP',serif;font-size:1.25rem;color:var(--brown-deepest);margin-bottom:4px;}
+.sec-title p{font-size:.83rem;color:var(--gray);line-height:1.6;}
+.sec-badge{display:inline-block;background:var(--brown-pale);color:var(--brown-deepest);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:8px;}
+.form-wrap{background:white;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px 30px;margin-top:6px;}
+.form-selected-badge{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fdf6ee;border:2px solid var(--brown-mid);border-radius:var(--radius-sm);margin-bottom:22px;}
+.form-sel-emoji{font-size:1.8rem;}
+.form-sel-name{font-size:1rem;font-weight:700;color:var(--brown-deepest);}
+.form-sel-sub{font-size:.75rem;color:var(--gray);margin-top:2px;}
+.advice-box{background:#fff8ec;border:1px solid var(--brown-light);border-radius:6px;padding:11px 14px;margin:0 0 16px;font-size:.85em;line-height:1.6;color:#5a3a1a;}
+.advice-box strong{color:var(--brown-mid);}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-weight:bold;margin-bottom:7px;color:#2c3e50;font-size:.9rem;}
+.form-group textarea{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;font-size:.88rem;font-family:'Noto Sans JP',sans-serif;box-sizing:border-box;min-height:88px;resize:vertical;line-height:1.65;}
+.form-group textarea:focus{outline:none;border-color:var(--brown-light);box-shadow:0 0 0 3px rgba(198,156,109,.15);}
+.char-counter{display:block;text-align:right;font-size:.8em;color:#999;margin-top:4px;}
+.example-box{background:#fdf6ee;border:1px dashed var(--brown-light);border-radius:6px;padding:9px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px;}
+.example-text{flex:1;margin:0;font-size:.85em;color:#444;line-height:1.55;}
+.btn-copy-ex{flex-shrink:0;background:white;border:1px solid var(--brown-mid);color:var(--brown-mid);border-radius:5px;padding:4px 8px;font-size:.78em;font-weight:bold;cursor:pointer;white-space:nowrap;}
+.btn-copy-ex:hover{background:var(--brown-pale);}
+.form-control{width:100%;padding:9px 11px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;font-size:.86rem;font-family:'Noto Sans JP',sans-serif;background:white;-webkit-appearance:none;appearance:none;}
+select.form-control{background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2212%22 height%3D%2212%22%3E%3Cpath fill%3D%22%236f4e37%22 d%3D%22M6 8L1 3h10z%22%2F%3E%3C%2Fsvg%3E');background-repeat:no-repeat;background-position:right 9px center;padding-right:26px;cursor:pointer;}
+.btn-generate{display:block;width:100%;padding:13px;background:linear-gradient(135deg,var(--brown-mid),var(--brown-deepest));color:white;border:none;border-radius:8px;font-size:.98rem;font-weight:bold;cursor:pointer;font-family:'Noto Sans JP',sans-serif;letter-spacing:.05em;box-shadow:0 4px 15px rgba(111,78,55,.35);transition:all .2s;margin-top:4px;}
+.btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(111,78,55,.4);}
+.result-area{margin-top:22px;padding-top:22px;border-top:2px solid #ede0d0;}
+.prompt-block{margin-bottom:18px;}
+.prompt-block h4{font-size:.9rem;font-weight:700;color:var(--brown-deepest);border-left:4px solid var(--brown-mid);padding-left:9px;margin-bottom:7px;}
+.prompt-block p{font-size:.8rem;color:var(--gray);margin-bottom:7px;}
+.prompt-textarea{width:100%;min-height:140px;background:#f8f8f8;border:1px solid #ddd;border-radius:7px;padding:9px;font-family:'Courier New',monospace;font-size:.76rem;line-height:1.6;resize:vertical;color:#333;}
+.btn-copy-prompt{float:right;margin-top:6px;background:#28a745;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-copy-prompt:hover{background:#218838;}
+.clearfix::after{content:'';display:table;clear:both;}
+.nav-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.btn-back{background:#6c757d;color:white;border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.btn-back:hover{background:#5a6268;}
+.btn-claude{background:var(--amber);color:var(--brown-deepest);border:none;border-radius:8px;padding:9px 18px;font-size:.83rem;font-weight:700;text-decoration:none;display:inline-block;font-family:'Noto Sans JP',sans-serif;}
+.btn-claude:hover{background:var(--amber-dark);color:white;}
+.keiji-card{background:linear-gradient(135deg,#faf0e0,#f5e6d0);border:1px solid #d4b896;border-radius:var(--radius-sm);padding:18px 20px;margin-top:22px;font-size:.82rem;line-height:1.8;color:#4a2a0a;}
+.keiji-name{font-weight:700;color:var(--brown-mid);font-size:.83rem;margin-bottom:5px;}
+.keiji-question{background:#fdf6ee;border-left:4px solid var(--brown-light);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px;font-size:.82rem;color:#4a2a0a;line-height:1.7;}
+.keiji-question .keiji-q-label{font-weight:700;color:var(--brown-mid);font-size:.78rem;display:block;margin-bottom:5px;}
+.keiji-question ul{margin:0;padding-left:1.2em;}
+.keiji-question ul li{margin-bottom:2px;}
+.why-required-badge{display:inline-block;background:var(--brown-mid);color:white;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.why-hint{background:#fff8ec;border-left:4px solid var(--amber);padding:9px 13px;font-size:.8em;color:#7a5c00;line-height:1.75;margin-bottom:8px;border-radius:0 6px 6px 0;}
+.form-group.why-group{background:#fffaf2;border:1px solid var(--amber);border-radius:8px;padding:12px 14px 8px;margin-bottom:20px;}
+.self-first-hint{font-size:.75rem;color:var(--gray);text-align:center;margin-bottom:6px;font-style:italic;}
+.example-box-later{margin-top:8px;}
+.error-msg{color:#c0392b;font-weight:bold;text-align:center;padding:10px;font-size:.88rem;}
+.hidden{display:none!important;}
+.footer{text-align:center;padding:24px 16px;font-size:.75rem;color:var(--gray);line-height:1.8;border-top:1px solid #e0cdb8;margin-top:40px;}
+.footer strong{color:var(--brown-mid);}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-brand">
+        <span class="hero-tree">☕</span>
+        <div><div class="hero-title">就活の木｜ES作成支援</div><div class="hero-subtitle">人柄・こだわりを伝えるメソッド</div></div>
+      </div>
+      <div class="hero-badge">APIキー不要</div>
+    </div>
+    <div class="hero-section-tag">☕ コーヒーブレイク</div>
+    <p class="hero-desc"><strong>面接官が「この人と話してみたい」と思う瞬間を作ろう。</strong><br>
+    趣味・特技・資格のカードを選んで入力するだけで、あなたの「人柄」と「こだわり」が伝わる文章のプロンプトを生成します。</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="cf-screen1">
+    <div class="sec-title">
+      <span class="sec-badge">☕ コーヒーブレイク</span>
+      <h2>趣味・特技・資格のテーマを選んでください</h2>
+      <p>面接のアイスブレイクに使えるあなたらしいひと言を作りましょう。</p>
+    </div>
+    <div class="cat-label" style="margin-top:4px;">🎮 趣味・好きなこと</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="cfSelect('game',this)"><span class="th-emoji">🎮</span><div class="th-name">ゲーム・e-Sports</div><div class="th-sub">戦略・チームプレイ</div></div>
+      <div class="th-card" onclick="cfSelect('sports',this)"><span class="th-emoji">⚽</span><div class="th-name">スポーツ・運動</div><div class="th-sub">継続・チーム・競技</div></div>
+      <div class="th-card" onclick="cfSelect('music',this)"><span class="th-emoji">🎵</span><div class="th-name">音楽・楽器</div><div class="th-sub">練習・表現・感性</div></div>
+      <div class="th-card" onclick="cfSelect('cook',this)"><span class="th-emoji">🍳</span><div class="th-name">料理・グルメ</div><div class="th-sub">創造性・探求心</div></div>
+      <div class="th-card" onclick="cfSelect('travel',this)"><span class="th-emoji">✈️</span><div class="th-name">旅行・散策</div><div class="th-sub">好奇心・行動力</div></div>
+      <div class="th-card" onclick="cfSelect('read',this)"><span class="th-emoji">📚</span><div class="th-name">読書・映画鑑賞</div><div class="th-sub">知識欲・思考力</div></div>
+    </div>
+    <div class="cat-label">⭐ 特技・資格</div>
+    <div class="card-grid-3">
+      <div class="th-card" onclick="cfSelect('skill_early',this)"><span class="th-emoji">🌅</span><div class="th-name">早寝早起き・習慣</div><div class="th-sub">自己管理・継続力</div></div>
+      <div class="th-card" onclick="cfSelect('shikaku_toeic',this)"><span class="th-emoji">🌍</span><div class="th-name">TOEIC・英語</div><div class="th-sub">継続力・目標達成</div></div>
+      <div class="th-card" onclick="cfSelect('shikaku_it',this)"><span class="th-emoji">💻</span><div class="th-name">IT系資格</div><div class="th-sub">学習意欲・論理的思考</div></div>
+    </div>
+    <div class="keiji-card">
+      <div class="keiji-name">☕ キャリ爺より</div>
+      コーヒーブレイクは面接官が「この人と話してみたい」と思う瞬間を作るコーナーです。特別なことでなくて大丈夫。あなたのこだわり・継続してきたこと——そこに人柄が宿ります。
+    </div>
+  </div>
+
+  <div id="cf-screen2" class="hidden">
+    <div class="form-wrap">
+      <div class="form-selected-badge">
+        <span class="form-sel-emoji" id="cf-form-emoji"></span>
+        <div><div class="form-sel-name" id="cf-form-name"></div><div class="form-sel-sub">あなたの人柄が伝わる内容を入力してください</div></div>
+      </div>
+      <div class="advice-box"><strong>アドバイス：</strong>スキルや実績よりも「人柄」「こだわり」「ユニークな視点」が伝わるように書きましょう。</div>
+
+      <div class="form-group">
+        <label>【STEP 1】内容（何をしているか）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">☕ キャリ爺から：気軽に教えて</span>
+          <ul><li>趣味・特技・資格…何でもOK。特別じゃなくていい。</li><li>固有名詞（ゲームのタイトル・楽器の種類など）を入れると伝わりやすい。</li></ul>
+        </div>
+        <textarea id="cf-inp-what" data-counter="cf-cnt-what" oninput="updateCnt(this)" placeholder="その趣味・特技を、いつから・どのくらいの頻度でやっていますか？（具体的な期間や頻度を入れると伝わりやすいです）"></textarea>
+        <span id="cf-cnt-what" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="cf-ex-what"></p><button class="btn-copy-ex" onclick="copyEx('cf-ex-what','cf-inp-what')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group why-group">
+        <label>💡 なぜ、その趣味・特技を続けているのですか？<span class="why-required-badge">ここが等身大</span></label>
+        <div class="why-hint">「続いている理由」を書くと、あなたの性格・価値観が自然に伝わります。「楽しいから」よりもう一歩深く——なぜ楽しいのかを。</div>
+        <div class="keiji-question">
+          <span class="keiji-q-label">☕ キャリ爺から：なんで続いてるの？</span>
+          <ul><li>やめようと思ったことはある？それでもなぜ続けてるの？</li><li>「なんとなく好き」より深いところ——何が楽しくて、何が自分に合っていると感じてる？</li></ul>
+        </div>
+        <textarea id="cf-inp-why" data-counter="cf-cnt-why" oninput="updateCnt(this)" placeholder="なぜ、その趣味・特技を続けているのですか？（「楽しいから」より一歩深く——あなたが続ける理由の「核」を教えてください）"></textarea>
+        <span id="cf-cnt-why" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="cf-ex-why"></p><button class="btn-copy-ex" onclick="copyEx('cf-ex-why','cf-inp-why')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【STEP 2】深掘り（こだわり・熱中ポイント）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">☕ キャリ爺から：どんなこだわりがある？</span>
+          <ul><li>どのくらいの頻度で？どんな工夫や楽しみ方をしてる？</li><li>「なぜ続いているのか」「何が面白いのか」を正直に。</li></ul>
+        </div>
+        <textarea id="cf-inp-how" data-counter="cf-cnt-how" oninput="updateCnt(this)" placeholder="その趣味・特技で、あなたが一番こだわっていること・熱中している部分は何ですか？（人に話したくなるエピソードがあれば）"></textarea>
+        <span id="cf-cnt-how" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="cf-ex-how"></p><button class="btn-copy-ex" onclick="copyEx('cf-ex-how','cf-inp-how')">参考にコピー</button></div>
+      </div>
+
+      <div class="form-group">
+        <label>【STEP 3】人柄・強み（面接官に伝えたいこと）</label>
+        <div class="keiji-question">
+          <span class="keiji-q-label">☕ キャリ爺から：この趣味であなたはどんな人？</span>
+          <ul><li>この趣味・特技を通じて、どんな人柄が伝わると思う？</li><li>「継続力がある」「こだわりが強い」「チームワークが好き」…何でもOK。</li></ul>
+        </div>
+        <textarea id="cf-inp-strength" data-counter="cf-cnt-strength" oninput="updateCnt(this)" placeholder="この趣味・特技を通じて伝わる、あなたの人柄・強みは何だと思いますか？（面接官に「会ってみたい」と思わせるポイントを）"></textarea>
+        <span id="cf-cnt-strength" class="char-counter">0 文字</span>
+        <div class="self-first-hint">↓ 参考としてサンプルも見てみよう</div>
+        <div class="example-box example-box-later"><p class="example-text" id="cf-ex-strength"></p><button class="btn-copy-ex" onclick="copyEx('cf-ex-strength','cf-inp-strength')">参考にコピー</button></div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid #ede0d0;margin:20px 0;">
+      <div class="form-group">
+        <select id="cf-length" class="form-control">
+          <option value="50文字程度">50文字程度</option>
+          <option value="100文字程度" selected>100文字程度</option>
+          <option value="150文字程度">150文字程度</option>
+          <option value="A4・1行程度">A4・1行程度</option>
+        </select>
+      </div>
+      <button class="btn-generate" onclick="cfGenerate()">☕ AI添削プロンプトを生成する</button>
+      <div id="cf-error" class="error-msg hidden"></div>
+      <div id="cf-result" class="result-area hidden"></div>
+    </div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="cfGoScreen(1)">← テーマ選択に戻る</button>
+      <a href="https://claude.ai/new" target="_blank" class="btn-claude">🤖 Claude.aiを開く</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>🌱 就活の木</strong>｜コーヒーブレイク作成支援ツール<br>
+  「仕事を通して必要とされる生き方を、自分の手で作り上げていくこと」——それが、就職の本質です。<br>
+  <span style="margin-top:6px;display:block;color:#a0908a;">君は、一人じゃない。いつでも、目の前のキャリア支援課の扉は開いているよ。——キャリ爺</span>
+</div>
+
+<script>
+const COFFEE_DATA={
+  game:{emoji:'🎮',name:'ゲーム・e-Sports',
+    what:'例：大学の友人とオンラインゲーム（「Apex Legends」など）をチームで楽しんでいます。',
+    why:'例：一人でやるより、仲間と戦略を考えて勝った瞬間の方が何倍も楽しいと感じるからです。「チームで動く」ことへの自分の性格がよく出ている趣味だと思っています。',
+    how:'例：週3〜4回、ボイスチャットを繋ぎながらプレイ。ダンジョン攻略のための役割分担や戦術の話し合いが特に好きです。うまくいかなかった試合はリプレイを見て改善策を考えます。',
+    strength:'例：仲間の動きを見ながら自分の役割を判断する状況把握力と、チームワークを大切にする姿勢が、この趣味を通じて自然に身についています。'},
+  sports:{emoji:'⚽',name:'スポーツ・運動',
+    what:'例：大学のフットサルサークルで週2回活動しています。高校時代から合計8年間スポーツを続けています。',
+    why:'例：試合に負けたとき「なぜうまくいかなかったか」を考えずにはいられない性格で、その悔しさが次の練習の原動力になっています。続けている理由は、この「悔しさと向き合う感覚」が好きだからだと思います。',
+    how:'例：練習だけでなく、試合の動画を見て自分のプレーを振り返るようにしています。うまくいかなかった場面を分析し、次の練習で試すのが習慣になっています。',
+    strength:'例：うまくいかなくても諦めずに原因を考え、改善し続ける粘り強さと自己分析力が、スポーツを通じて身についています。'},
+  music:{emoji:'🎵',name:'音楽・楽器',
+    what:'例：高校から続けているギターを今も週3〜4回練習しています。J-POPのコード弾きから始め、最近はジャズのアドリブにも挑戦中です。',
+    why:'例：1曲弾けるようになるまでの過程——うまく弾けない、繰り返す、少しずつできていく——この感覚がたまらなく好きで、やめられません。「完成した瞬間」より「少しずつできていく過程」に喜びを感じる性格だと思います。',
+    how:'例：好きな曲を耳コピして弾けるようになるのが目標。1曲マスターするまで毎日少しずつ練習する習慣があります。',
+    strength:'例：コツコツ積み上げる継続力と、うまくいかない部分を分析して改善する粘り強さが、この趣味を通じて自然に培われています。'},
+  cook:{emoji:'🍳',name:'料理・グルメ',
+    what:'例：一人暮らしをきっかけに料理を始め、今では週末に3〜4品を作り置きするのが習慣になっています。',
+    why:'例：レシピ通りに作るのが嫌いで、「これとこれを組み合わせたらどうなるか」と試してみたくなる性格です。失敗しても「なぜうまくいかなかったか」を考えながら料理するのが好きなんだと思います。',
+    how:'例：レシピをそのまま作るより、食材の組み合わせや味のバランスを自分なりにアレンジするのが好きです。失敗も多いですが、改善して再挑戦するのが楽しいです。',
+    strength:'例：試行錯誤を楽しめる創造力と、失敗を恐れずに改善を続けられるチャレンジ精神が、料理を通じて自然に身についています。'},
+  travel:{emoji:'✈️',name:'旅行・散策',
+    what:'例：年2〜3回、国内外に一人旅をしています。計画から宿の手配まですべて自分でこなします。',
+    why:'例：観光地より「その土地の日常」が見たくて、地元の市場や商店街をぶらぶら歩くのが好きです。「知らない場所に飛び込む緊張感」と「新しい発見の喜び」が、旅をやめられない理由です。',
+    how:'例：観光地よりも地元の市場や商店街をぶらぶら歩くのが好きです。その土地に住む人々の日常を肌で感じることに面白さを見出しています。',
+    strength:'例：初めての環境でも物怖じせずに飛び込める行動力と、未知のものへの強い好奇心が、旅を通じて鍛えられています。'},
+  read:{emoji:'📚',name:'読書・映画鑑賞',
+    what:'例：月に4〜5冊のペースで読書を続けています。ビジネス書・歴史小説・SFを好んで読みます。',
+    why:'例：読み終わった後に「自分の見方が変わった」という感覚が好きで、本をやめられません。知らなかったことを知る瞬間の気持ちよさを、仕事でも感じ続けたいと思っています。',
+    how:'例：読んだ本はノートに「3つの気づき」を書き留める習慣があります。読みっぱなしにせず、自分の考えと結びつけることで理解を深めています。',
+    strength:'例：知識欲が旺盛で、学んだことを自分の言葉で整理し実生活に活かそうとする思考力が、読書習慣を通じて培われています。'},
+  skill_early:{emoji:'🌅',name:'早寝早起き・習慣',
+    what:'例：大学生活4年間、「23時就寝・6時起床」を習慣にしています。',
+    why:'例：夜更かしした翌日の「なんとなく不調な自分」が嫌いで、それがきっかけで生活を整え始めました。「自分を管理できない日は、いい仕事もできない」と気づいてからは、早起きが自分への約束になっています。',
+    how:'例：朝の時間を読書や勉強に充てています。夜は寝る前に翌日のタスクを整理してから就寝するのが毎日のルーティンです。',
+    strength:'例：自分との約束を守り続ける自己管理能力と、地道な継続力が、この習慣を通じて証明されています。'},
+  shikaku_toeic:{emoji:'🌍',name:'TOEIC・英語',
+    what:'例：TOEIC 720点（大学入学時は450点からスタート）。3年間で270点アップしました。',
+    why:'例：最初はただ「就職に有利」と思って始めましたが、スコアが上がるにつれて「英語で世界が広がる感覚」が楽しくなりました。今は点数より「使える英語」が目標です。',
+    how:'例：「2年生で600点、3年生で700点」という目標を設定。毎日1時間の学習（通学中に単語、夜に文法）を2年間継続しました。',
+    strength:'例：目標を設定してコツコツ達成できる計画力と継続力が、スコアという形で証明されています。'},
+  shikaku_it:{emoji:'💻',name:'IT系資格',
+    what:'例：大学2年次にITパスポートを取得。現在は基本情報技術者の取得に向けて勉強中です。',
+    why:'例：「デジタル化が進む社会で、ITがわからないまま働くのは不安だ」と感じたことがきっかけです。就活のためではなく、「自分に必要だから」という動機で動けたのが、続けられた理由だと思います。',
+    how:'例：デジタル化が進む社会でITの基礎知識は必須だと感じ、就活の前に体系的に学ぼうと決意。参考書と過去問を繰り返し解く学習法で1ヶ月で合格しました。',
+    strength:'例：「必要だ」と感じたことを自分で動いて身につけられる主体性と向上心が、資格取得を通じて表れています。'}
+};
+
+let cfCurrentData=null;
+function cfGoScreen(n){
+  [1,2].forEach(i=>{const el=document.getElementById('cf-screen'+i);if(el)el.classList.add('hidden');});
+  const t=document.getElementById('cf-screen'+n);if(t)t.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function cfSelect(key,el){
+  cfCurrentData=COFFEE_DATA[key];
+  document.querySelectorAll('.th-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');
+  document.getElementById('cf-form-emoji').textContent=cfCurrentData.emoji;
+  document.getElementById('cf-form-name').textContent=cfCurrentData.name;
+  setTxt('cf-ex-what',cfCurrentData.what);setTxt('cf-ex-why',cfCurrentData.why||'');
+  setTxt('cf-ex-how',cfCurrentData.how);setTxt('cf-ex-strength',cfCurrentData.strength);
+  resetFields(['cf-inp-what','cf-inp-why','cf-inp-how','cf-inp-strength']);
+  document.getElementById('cf-result').classList.add('hidden');document.getElementById('cf-result').innerHTML='';
+  hideErr('cf-error');cfGoScreen(2);
+}
+function cfGenerate(){
+  const w=g('cf-inp-what'),why=g('cf-inp-why'),h=g('cf-inp-how'),s=g('cf-inp-strength'),len=g('cf-length');
+  if(!w||!h||!s){showErr('cf-error','STEP1・STEP2・STEP3の3項目を入力してください。');return;}
+  hideErr('cf-error');
+  const whyCf=why?`\n・なぜ続けているのか（内面の動機）: ${why}`:'';
+  const step1=`# 命令\nあなたは優秀なコピーライターであり、採用担当者の視点を持っています。\n以下の【学生のドラフト】を読み、面接官が「この学生と話してみたい」と思う「${cfCurrentData.name}」のベース文章を作成してください。\n\n# 制約条件\n1. スキルや実績よりも、学生の「人柄」「ユニークな視点」「こだわり」が伝わるように書く\n2. 面接の冒頭に会話のきっかけになるようなキャッチーな表現を含める\n3. 業務内容に無理やり結びつける必要はない\n4. 誇張せず、本人の言葉に近いトーンで書く\n\n# 入力されたドラフト\n・テーマ: ${cfCurrentData.name}\n・内容: ${w}${whyCf}\n・こだわり・熱中ポイント: ${h}\n・アピールしたい人柄/強み: ${s}\n\n# 出力フォーマット（厳守）\n## 1. コーヒーブレイク・ベース文章\n## 2. 注目ポイント解説`;
+  const step2=`ありがとうございます。\n「1. コーヒーブレイク・ベース文章」を、**厳密に${len}**に調整してください。\n最もキャッチーな部分を残し、です・ます調で明るいトーンで書いてください。\n最後に文字数カウントを記載してください。`;
+  showResult('cf-result',step1,step2);
+}
+function g(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function setTxt(id,val){const e=document.getElementById(id);if(e)e.textContent=val||'';}
+function resetFields(ids){ids.forEach(id=>{const e=document.getElementById(id);if(e){e.value='';const c=document.getElementById(e.dataset.counter);if(c)c.textContent='0 文字';}});}
+function updateCnt(ta){const c=document.getElementById(ta.dataset.counter);if(c)c.textContent=ta.value.length+' 文字';}
+function copyEx(exId,taId){const ex=document.getElementById(exId),ta=document.getElementById(taId);if(!ex||!ta)return;ta.value=ex.textContent;updateCnt(ta);ta.focus();}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.remove('hidden');}}
+function hideErr(id){const e=document.getElementById(id);if(e)e.classList.add('hidden');}
+function copyPrompt(id,btn){const ta=document.getElementById(id);if(!ta)return;ta.select();try{document.execCommand('copy');btn.textContent='コピー完了！';setTimeout(()=>btn.textContent='コピー',2000);}catch(e){}}
+function showResult(resultId,p1,p2){
+  const el=document.getElementById(resultId);
+  el.innerHTML=`<div class="prompt-block"><h4>📋 STEP 1｜Claude.aiに貼り付けるプロンプト</h4><p>以下をそのままClaude.aiにコピー&ペーストしてください。</p><textarea class="prompt-textarea" id="${resultId}-p1" readonly>${p1}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p1',this)">コピー</button></div></div><div class="prompt-block"><h4>📋 STEP 2｜AI回答後に続けて貼り付けるプロンプト</h4><p>STEP1の回答を受け取ったら、続けて以下を貼り付けてください。</p><textarea class="prompt-textarea" id="${resultId}-p2" readonly>${p2}</textarea><div class="clearfix"><button class="btn-copy-prompt" onclick="copyPrompt('${resultId}-p2',this)">コピー</button></div></div>`;
+  el.classList.remove('hidden');el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
